@@ -22,8 +22,417 @@
 					<p>Drupal code served fast!</p>
 					<small><br/>use &larr;&uarr;&darr;&rarr; or &lt;space&gt;</small>
 				</section>
+
 				<section>
-					<h2>Heading</h2>
+					<h2>Intro</h2>
+					<p class="fragment">Some text</p>
+				</section>
+
+				<section>
+					<h2>Content Warnings (CWs)</h2>
+					<p class="fragment">Food, <span class="fragment">cooking,</span> <span class="fragment">and puns.</span></p>
+				</section>
+
+				<section>
+					<h2>What the problem is</h2>
+					<p class="fragment">Some text</p>
+				</section>
+
+				<section>
+					<h2>What is cached?</h2>
+					<p class="fragment">Some text</p>
+				</section>
+
+				<section>
+					<section>
+						<h1>Snacks</h1>
+						<h2>Tiny morsels of caching</h2>
+					</section>
+
+					<section>
+						<h2>Cache within the same request</h2>
+						<p class="fragment">Small speedups</p>
+						<p class="fragment">Encourage use of <code>$myClass->myMethod()</code></p>
+					</section>
+
+					<section>
+						<h2>Static vars</h2>
+						<p class="fragment">Persist for their <em>scope</em></p>
+						<p class="fragment">Method, Function</p>
+						<p class="fragment">Different from static class <em>properties</em>!</p>
+					</section>
+
+					<section>
+						<pre><code>
+function myFunction() {
+	static $myVar = NULL;
+
+	if (empty($myVar)) {
+		// Generate the value here.
+	}
+
+	return $myVar;
+}
+						</code></pre>
+					</section>
+
+					<section>
+						<h2>Static vars with reset</h2>
+						<p class="fragment">Bypass cache when appropriate</p>
+						<p class="fragment">Allow regeneration <ins>within the same request</ins></p>
+					</section>
+
+					<section>
+						<pre><code>
+function myFunction(bool $reset = FALSE) {
+	static $myVar = NULL;
+
+	if (empty($myVar) || $reset) {
+		// Generate the value here.
+	}
+
+	return $myVar;
+}
+						</code></pre>
+					</section>
+
+					<section>
+						<h2>Sharing static vars</h2>
+						<p class="fragment">Share between methods, functions</p>
+						<p class="fragment">Rarer, but useful!</p>
+					</section>
+
+					<section>
+						<h2>drupal_static()</h2>
+						<p class="fragment">Part of Drupal core</p>
+						<p class="fragment">Assigns a globally unique name</p>
+					</section>
+
+					<section>
+						<h2>When to use</h2>
+						<p class="fragment">Function, method called <em>a lot</em></p>
+						<p class="fragment">Value <em>never</em> needs reset mid-request!</p>
+					</section>
+
+					<section>
+						<pre><code>
+function myMethod() {
+	$cache = &drupal_static(__FUNCTION__, FALSE);
+
+	if (empty($cache)) {
+		// Generate the value here.
+	}
+
+	return $cache;
+}
+						</code></pre>
+					</section>
+
+					<section>
+						<h2>__FUNCTION__ contant</h2>
+						<p class="fragment">Part of PHP</p>
+						<p class="fragment">Replaced with the current function name</p>
+						<p class="fragment">Function names must be globally unique!</p>
+					</section>
+
+					<section>
+						<h2>What about a class?</h2>
+					</section>
+
+					<section>
+						<pre><code>
+class MyClass {
+	public function myMethod() {
+		$cache = &drupal_static(__METHOD__, FALSE);
+
+		if (empty($cache)) {
+			// Generate the value here.
+		}
+
+		return $cache;
+	}
+}
+						</code></pre>
+					</section>
+
+					<section>
+						<h2>__METHOD__ constant</h2>
+						<p class="fragment">Like <code>__FUNCTION__</code></p>
+						<p class="fragment">but includes class, namespace</p>
+					</section>
+
+					<section>
+						<h2>Parameterizing static vars</h2>
+						<p class="fragment">Create different results</p>
+						<p class="fragment">Generate on ask</p>
+					</section>
+
+					<section>
+						<pre><code>
+class MyClass {
+	public function myMethod(string $myParam) {
+
+		// Init the cache to an array, not just FALSE.
+		$cache = &drupal_static(__METHOD__, []);
+
+		if (empty($cache[$param])) {
+			// Generate the value for $myParam here.
+		}
+
+		return $cache;
+	}
+}
+						</code></pre>
+					</section>
+
+					<section>
+						<h2>Use an array</h2>
+						<p class="fragment">The parameter is the <code>$key</code></p>
+						<p class="fragment">Generate only for the given value</p>
+					</section>
+
+					<section>
+						<h2>Only useful for scalars!</h2>
+						<p class="fragment">Mostly <code>string</code> and <code>int</code></p>
+						<p class="fragment">Rarely <code>bool</code> and <code>float</code></p>
+					</section>
+
+					<section>
+						<h2>Reference parameters</h2>
+						<p class="fragment">Objects, arrays</p>
+						<p class="fragment">Generate a unique cache key</p>
+					</section>
+
+					<section>
+						<pre><code>
+class MyClass {
+	public function myMethod(NodeInterface $node) {
+		// Get the node ID, it's unique enough here.
+		$nid = $node->id();
+
+		$cache = &drupal_static(__METHOD__, []);
+
+		if (empty($cache[$nid])) {
+			// Generate the value for the node with ID $nid.
+		}
+
+		return $cache;
+	}
+}
+						</code></pre>
+					</section>
+
+					<section>
+						<h2>Multiple parameters</h2>
+						<p class="fragment">Same idea!</p>
+						<p class="fragment">with a longer key and hashing</p>
+					</section>
+
+					<section>
+						<pre><code>
+class MyClass {
+	public function myMethod(NodeInterface $node,
+							             string $param1,
+							             string $param2) {
+
+		// Get unique value for each, make a string, hash it.
+		$cid = md5(implode(':', [$node->id(), $param1, $param2]));
+
+		$cache = &drupal_static(__METHOD__, []);
+
+		if (empty($cache[$cid])) {
+			// Generate the value the unique $cid.
+		}
+
+		return $cache;
+	}
+}
+						</code></pre>
+						<small class="fragment">(Scroll down.)</small>
+					</section>
+
+					<section>
+						<h2>Takeaways</h2>
+						<p class="fragment">Use <code>drupal_static()</code> more often</p>
+						<p class="fragment">Easy, low risk</p>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h1>Lunch</h1>
+						<p class="fragment">Beyond the request</p>
+					</section>
+
+					<section>
+						<h2>Persistent caching</h2>
+						<p class="fragment">Cache values to disk</p>
+						<p class="fragment">Typically, to the database</p>
+					</section>
+
+					<section>
+						<h2>Other cache drivers</h2>
+						<p class="fragment">Redis, Memcache</p>
+						<p class="fragment">Retains values in memory for speed</p>
+					</section>
+
+					<section>
+						<h2>Drivers are transparent</h2>
+						<p class="fragment">Same caching API for them all!</p>
+					</section>
+
+					<section>
+						<h2>Cache API</h2>
+						<p class="fragment"><code>Drupal::cache()</code></p>
+					</section>
+
+					<section>
+						<pre><code>
+// Get the cache backend.
+$cache = \Drupal::cache();
+
+// Save something to it.
+$cache->set('my:cache:key', $myValue);
+
+// Get something from it.
+$value = $cache->get('a:different:key');
+						</code></pre>
+					</section>
+
+					<section>
+						<h2>Bins</h2>
+						<p class="fragment">Divides up caches</p>
+						<p class="fragment">Helps avoid "key stomping"</p>
+					</section>
+
+					<section>
+						<pre><code>
+$cacheBin = \Drupal::cache('default');
+
+// Different bin...
+$cacheBin->set('my:cache:key', $myValue);
+
+// ...same set() and get().
+$value = $cacheBin->get('a:different:key');
+						</code></pre>
+					</section>
+
+					<section>
+						<h2>Common cache bins</h2>
+						<ul>
+							<li class="fragment"><code>default</code>, regularly accessed data</li>
+							<li class="fragment"><code>data</code>, better when less accessed</li>
+							<li class="fragment"><code>bootstrap</code>, <code>render</code>, <code>discovery</code>, used internally</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Where's it end up?</h2>
+						<p class="fragment">Typically, a bin-named database table</p>
+						<p class="fragment">Different bins, different drivers</p>
+					</section>
+
+					<section>
+						<h2>But I want my own!</h2>
+						<p class="fragment">You can <em>make</em> your own bins!</p>
+					</section>
+
+					<section data-transition="none">
+						<pre><code>
+docroot/modules/custom/myModule
+├── config/
+├── myModule.info.yml
+├── myModule.module
+│
+└── src/
+
+						</code></pre>
+					</section>
+
+					<section data-transition="none">
+						<pre><code>
+docroot/modules/custom/my_module
+├── config/
+├── my_module.info.yml
+├── my_module.module
+├── my_module.services.yml  // add or edit this file
+└── src/
+						</code></pre>
+					</section>
+
+					<section>
+						<pre><code>
+services:
+  cache.my_module:
+    class: Drupal\Core\Cache\CacheBackendInterface
+    tags:
+      - { name: cache.bin }
+    factory: ['@cache_factory', 'get']
+    arguments: [my_module]
+						</code></pre>
+					</section>
+
+					<section>
+						<h2>That's it!</h2>
+						<p class="fragment">No need to generate a class</p>
+						<p class="fragment">Creates a new service</p>
+					</section>
+
+					<section>
+						<pre><code>
+$my_module_cache = \Drupal::cache('my_module');
+						</code></pre>
+						<p class="fragment">...or...</p>
+						<pre class="fragment"><code>
+$my_module_cache = \Drupal::service('cache.my_module');
+						</code></pre>
+					</section>
+
+					<section>
+						<h2>Cache injection</h2>
+						<p class="fragment">Use on forms, plugins, controllers</p>
+					</section>
+
+					<section>
+						<pre><code>class MyController extends ControllerBase {
+
+	public static function create(ContainerInterface $container) {
+    $myCache = $container->get('cache.my_module');
+
+    return new static($myCache);
+  }
+
+	public __construct(CacheBackendInterface $cache) {
+		$this->cache = $cache;
+	}
+
+	public doSomething() {
+		$this->cache->get('my:cache:key');
+	}
+}</code></pre>
+					</section>
+
+					<section>
+						<h2>Cache decorating</h2>
+						<p class="fragment">Create custom service</p>
+						<p class="fragment">Encapsulates module logic</p>
+					</section>
+
+				</section>
+
+				<section>
+					<h2>Anti-caching recipies</h2>
+					<!--
+					This is intentionally at the rear because we want people know what to do first, before we break rules!
+					-->
+					<p class="fragment">Some text</p>
+				</section>
+
+				<section>
+					<h2>Thank you!</h2>
+					<!--
+					Normal thank you slide with links on it
+					-->
 					<p class="fragment">Some text</p>
 				</section>
 			</div>
