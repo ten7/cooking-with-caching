@@ -129,14 +129,20 @@ function myMethod() {
 					</section>
 
 					<section>
-						<h2>__FUNCTION__ contant</h2>
-						<p class="fragment">Part of PHP</p>
+						<h2><code>__FUNCTION__</code></h2>
+						<p class="fragment">Constant, part of PHP</p>
 						<p class="fragment">Replaced with the current function name</p>
+					</section>
+					<section>
+						<h2>Why?</h2>
 						<p class="fragment">Function names must be globally unique!</p>
+						<p class="fragment">Easier refactoring</p>
 					</section>
 
 					<section>
 						<h2>What about a class?</h2>
+						<p class="fragment">Method names not globally unique</p>
+						<p class="fragment"><code>__FUNCTION__</code> won't work!</p>
 					</section>
 
 					<section>
@@ -156,7 +162,7 @@ class MyClass {
 					</section>
 
 					<section>
-						<h2>__METHOD__ constant</h2>
+						<h2><code>__METHOD__</code></h2>
 						<p class="fragment">Like <code>__FUNCTION__</code></p>
 						<p class="fragment">but includes class, namespace</p>
 					</section>
@@ -264,21 +270,29 @@ class MyClass {
 						<p class="fragment">Beyond the request</p>
 					</section>
 
-					<section>
+					<section data-transition="none" data-background-transition="none" data-background="img/whatAboutRedis1.png" data-background-size="contain">
 						<h2>Persistent caching</h2>
 						<p class="fragment">Cache values to disk</p>
 						<p class="fragment">Typically, to the database</p>
 					</section>
-
-					<section>
-						<h2>Other cache drivers</h2>
-						<p class="fragment">Redis, Memcache</p>
-						<p class="fragment">Retains values in memory for speed</p>
+					<section data-transition="none" data-background-transition="none" data-background="img/whatAboutRedis2.png" data-background-size="contain">
+						<h2>Persistent caching</h2>
+						<p class="">Cache values to disk</p>
+						<p class="">Typically, to the database</p>
+					</section>
+					<section data-transition="none" data-background-transition="none" data-background="img/whatAboutRedis3.png" data-background-size="contain">
+						<h2>Persistent caching</h2>
+						<p class="">Cache values to disk</p>
+						<p class="">Typically, to the database</p>
 					</section>
 
-					<section>
-						<h2>Drivers are transparent</h2>
-						<p class="fragment">Same caching API for them all!</p>
+					<section data-transition="none" data-background-transition="none" data-background="img/whatAboutRedis4.png" data-background-size="contain">
+						<h2>You don't!</h2>
+						<p class="fragment">Redis, Memcache modules provide drivers</p>
+					</section>
+					<section data-transition="none" data-background-transition="none" data-background="img/whatAboutRedis5.png" data-background-size="contain">
+						<h2>You don't!</h2>
+						<p class="">Redis, Memcache modules provide drivers</p>
 					</section>
 
 					<section>
@@ -299,7 +313,7 @@ $value = $cache->get('a:different:key');
 						</code></pre>
 					</section>
 
-					<section>
+					<section data-background="img/bins.png" data-background-size="contain">
 						<h2>Bins</h2>
 						<p class="fragment">Divides up caches</p>
 						<p class="fragment">Helps avoid "key stomping"</p>
@@ -332,20 +346,26 @@ $value = $cacheBin->get('a:different:key');
 						<p class="fragment">Different bins, different drivers</p>
 					</section>
 
-					<section>
-						<h2>But I want my own!</h2>
-						<p class="fragment">You can <em>make</em> your own bins!</p>
+					<section data-transition="none" data-background-transition="none" data-background="img/butIWantMyOwn1.png" data-background-size="contain">
+					</section>
+
+					<section data-transition="none" data-background-transition="none" data-background="img/butIWantMyOwn2.png" data-background-size="contain">
+					</section>
+
+					<section data-background="img/aBinOfHerOwn.png" data-background-size="contain">
+						<h2>Custom bins</h2>
+						<p class="fragment">Defined as a service</p>
+						<p class="fragment">No need to boilerplate a class!</p>
 					</section>
 
 					<section data-transition="none">
 						<pre><code>
-docroot/modules/custom/myModule
+docroot/modules/custom/my_module
 ├── config/
-├── myModule.info.yml
-├── myModule.module
+├── my_module.info.yml
+├── my_module.module
 │
 └── src/
-
 						</code></pre>
 					</section>
 
@@ -412,10 +432,60 @@ $my_module_cache = \Drupal::service('cache.my_module');
 }</code></pre>
 					</section>
 
+					<section data-transition="none" data-background-transition="none" data-background="img/soAllIHaveToDo1.png" data-background-size="contain">
+					</section>
+					<section data-transition="none" data-background-transition="none" data-background="img/soAllIHaveToDo2.png" data-background-size="contain">
+					</section>
+					<section data-transition="none" data-background-transition="none" data-background="img/soAllIHaveToDo3.png" data-background-size="contain">
+					</section>
+					<section data-transition="none" data-background-transition="none" data-background="img/soAllIHaveToDo4.png" data-background-size="contain">
+					</section>
+					<section data-transition="none" data-background-transition="none" data-background="img/soAllIHaveToDo5.png" data-background-size="contain">
+					</section>
+					<section data-transition="none" data-background-transition="none" data-background="img/soAllIHaveToDo6.png" data-background-size="contain">
+					</section>
+
 					<section>
-						<h2>Cache decorating</h2>
-						<p class="fragment">Create custom service</p>
-						<p class="fragment">Encapsulates module logic</p>
+						<h2>Module service pattern</h2>
+						<p class="fragment">Encapsulates logic in custom service</p>
+						<p class="fragment">Embeds cache service</p>
+					</section>
+
+					<section>
+						<h2>Creating services</h2>
+						<pre class="fragment"><code>$ drush generate service:custom</code></pre>
+						<p class="fragment">Prompts you for names, dependencies, module</p>
+					</section>
+
+					<section>
+						<pre><code>class MyService {
+
+  protected $cache;
+
+  public function __construct(CacheBackendInterface $cache) {
+    $this->cache = $cache;
+  }
+
+	public function doSomething() {
+		$cache_key = __METHOD__;
+    $out = $this->cache->get(__METHOD__);
+
+    if ($out === FALSE) {
+				// Make some data here...
+				// ...then cache.
+        $this->cache->set(__METHOD__, $out);
+      }
+    }
+
+    return $out;
+	}
+}</code></pre>
+						<small class="fragment">(Scroll down.)</small>
+					</section>
+
+					<section>
+						<h2>Combine as needed!</h2>
+						<p class="fragment"></p>
 					</section>
 
 				</section>
