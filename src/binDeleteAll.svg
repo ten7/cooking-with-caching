@@ -8,8 +8,8 @@
    id="svg2"
    version="1.1"
    inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
-   sodipodi:docname="template.svg"
-   inkscape:export-filename="../images/architecture22.png"
+   sodipodi:docname="binDeleteAll.svg"
+   inkscape:export-filename="../img/binDeleteAll2.png"
    inkscape:export-xdpi="96"
    inkscape:export-ydpi="96"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
@@ -22,6 +22,12 @@
    xmlns:dc="http://purl.org/dc/elements/1.1/">
   <defs
      id="defs4">
+    <rect
+       x="261.74703"
+       y="654.00523"
+       width="307.57565"
+       height="55.539451"
+       id="rect5" />
     <marker
        inkscape:stockid="Arrow2Mend"
        orient="auto"
@@ -135,11 +141,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:zoom="2.21"
-     inkscape:cx="855.20362"
-     inkscape:cy="644.11765"
+     inkscape:zoom="1.105"
+     inkscape:cx="524.88688"
+     inkscape:cy="442.08145"
      inkscape:document-units="px"
-     inkscape:current-layer="g5"
+     inkscape:current-layer="layer2"
      showgrid="false"
      units="px"
      inkscape:window-width="1920"
@@ -411,7 +417,7 @@
      inkscape:groupmode="layer"
      id="layer4"
      inkscape:label="laptop"
-     style="display:inline">
+     style="display:none">
     <g
        id="g1">
       <path
@@ -436,7 +442,7 @@
      inkscape:groupmode="layer"
      id="g5"
      inkscape:label="laptop fire"
-     style="display:none">
+     style="display:inline">
     <path
        inkscape:connector-curvature="0"
        id="path1"
@@ -506,7 +512,7 @@
      inkscape:groupmode="layer"
      id="layer14"
      inkscape:label="looking ahead"
-     style="display:none">
+     style="display:inline">
     <path
        inkscape:connector-curvature="0"
        d="m 914.79558,611.85441 c 0,-3.71857 1.3264,-6.73309 2.9626,-6.73309 1.6362,0 2.9627,3.01452 2.9627,6.73309 0,3.71861 -1.3265,6.73313 -2.9627,6.73313 -1.6362,0 -2.9626,-3.01452 -2.9626,-6.73313 z"
@@ -923,5 +929,20 @@
            x="360.89743"
            y="475.82053" /></flowRegion><flowPara
          id="flowPara1060" /></flowRoot>
+    <text
+       xml:space="preserve"
+       id="text5"
+       style="font-size:21.3333px;font-family:'Anime Ace 2.0 BB';-inkscape-font-specification:'Anime Ace 2.0 BB, Normal';text-align:center;white-space:pre;shape-inside:url(#rect5);fill:#000000;fill-opacity:1;stroke:none;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;paint-order:markers stroke fill"
+       transform="translate(150.11665,11.630373)"><tspan
+         x="295.89895"
+         y="677.85836"
+         id="tspan1">use ::deleteall() </tspan><tspan
+         x="363.70093"
+         y="704.52498"
+         id="tspan2">rarely!</tspan></text>
+    <path
+       id="path5"
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;paint-order:markers stroke fill;stroke-opacity:1"
+       d="M 800.24805 642.61133 L 680.29297 665.5293 A 141.46458 41.844597 0 0 0 563.27344 647.19336 A 141.46458 41.844597 0 0 0 421.80859 689.03711 A 141.46458 41.844597 0 0 0 563.27344 730.88281 A 141.46458 41.844597 0 0 0 704.73633 689.03711 A 141.46458 41.844597 0 0 0 703.05273 682.6582 L 800.24805 642.61133 z " />
   </g>
 </svg>

@@ -458,6 +458,33 @@ $my_module_cache = \Drupal::service('cache.my_module');
 					</section>
 
 					<section>
+						<pre><code>
+docroot/modules/custom/my_module
+├── config/
+├── my_module.info.yml
+├── my_module.module
+├── my_module.services.yml  // Update this...
+└── src/
+		└── MyService.php	 // ...and this too.
+						</code></pre>
+					</section>
+
+					<section>
+						<pre><code>services:
+  cache.my_module:
+    class: Drupal\Core\Cache\CacheBackendInterface
+    tags:
+      - { name: cache.bin }
+    factory: ['@cache_factory', 'get']
+    arguments: [my_module]
+
+	my_module:
+		class: Drupal\my_module\MyService
+		arguments: ['@cache.my_module']
+</code></pre>
+					</section>
+
+					<section>
 						<pre><code>class MyService {
 
   protected $cache;
@@ -467,8 +494,7 @@ $my_module_cache = \Drupal::service('cache.my_module');
   }
 
 	public function doSomething() {
-		$cache_key = __METHOD__;
-    $out = $this->cache->get(__METHOD__);
+		$out = $this->cache->get(__METHOD__);
 
     if ($out === FALSE) {
 				// Make some data here...
@@ -485,13 +511,287 @@ $my_module_cache = \Drupal::service('cache.my_module');
 
 					<section>
 						<h2>Combine as needed!</h2>
-						<p class="fragment"></p>
+						<p class="fragment">Cache service, <code>drupal_static()</code></p>
+						<p class="fragment">No param, reference param, multiple params!</p>
+					</section>
+					<section>
+						<h2>Tidy & Transparent</h2>
+						<p class="fragment">Module service centralizes code changes</p>
 					</section>
 
 				</section>
 
 				<section>
-					<h2>Anti-caching recipies</h2>
+					<section>
+						<h1>Dinner</h1>
+					</section>
+
+					<section  data-transition="none" data-background-transition="none" data-background="img/cacheClearAll1.png" data-background-size="contain">
+						<h2>Cache Invalidation</h2>
+						<p class="fragment">Cached data can get stale</p>
+						<p class="">&nbsp;</p>
+					</section>
+					<section  data-transition="none" data-background-transition="none" data-background="img/cacheClearAll2.png" data-background-size="contain">
+						<h2>Cache Invalidation</h2>
+						<p class="">Cached data can get stale</p>
+						<p class="">Clear all causes a <em>Stampede</em></p>
+					</section>
+					<section data-transition="none" data-background-transition="none" data-background="img/cacheClearAll3.png" data-background-size="contain">
+						<h2>Strategies</h2>
+						<p class="fragment">By name, time, or grouping</p>
+					</section>
+					<section data-transition="none" data-background-transition="none" data-background="img/cacheClearAll4.png" data-background-size="contain">
+						<h2>Strategies</h2>
+						<p class="">By name, time, or grouping</p>
+					</section>
+					<section data-transition="none" data-background-transition="none" data-background="img/cacheClearAll5.png" data-background-size="contain">
+						<h2>Strategies</h2>
+						<p class="">By name, time, or grouping</p>
+					</section>
+
+					<section data-transition="none" data-background-transition="none" data-background="img/binDeleteAll1.png" data-background-size="contain">
+						<pre><code>$cacheBin = \Drupal::cache('my_module');
+
+// Delete a key...
+$cacheBin->delete('my:cache:key');
+
+// ...multiple keys...
+$cacheBin->deleteMultiple(['my:cache:key', 'another:key']);
+
+// ...or the whole bin.
+$value = $cacheBin->deleteAll();</code></pre>
+					</section>
+					<section data-transition="none" data-background-transition="none" data-background="img/binDeleteAll2.png" data-background-size="contain">
+						<pre><code>$cacheBin = \Drupal::cache('my_module');
+
+// Delete a key...
+$cacheBin->delete('my:cache:key');
+
+// ...multiple keys...
+$cacheBin->deleteMultiple(['my:cache:key', 'another:key']);
+
+// ...or the whole bin.
+$value = $cacheBin->deleteAll();</code></pre>
+					</section>
+
+					<section>
+						<h2>TTLs</h2>
+						<p class="fragment"><em>Time to live</em></p>
+						<p class="fragment">Seconds remaining before expiry</p>
+					</section>
+
+					<section>
+						<pre><code>
+$cacheBin = \Drupal::cache('my_module');
+
+// Generate a TTL in seconds.
+$ttl = strtotime('+6 hours');
+
+// Set the key.
+$cacheBin->set('my:cache:key', $myValue, $ttl);
+						</code></pre>
+					</section>
+
+					<section data-transition="none" data-background-transition="none" data-background="img/untilAClearAllAtLeast1.png" data-background-size="contain">
+						<h2>Default TTL</h2>
+						<pre class="fragment"><code>Drupal\Core\Cache\Cache::PERMANENT</code></pre>
+					</section>
+					<section data-transition="none" data-background-transition="none" data-background="img/untilAClearAllAtLeast2.png" data-background-size="contain">
+						<h2>Default TTL</h2>
+						<pre class=""><code>Drupal\Core\Cache\Cache::PERMANENT</code></pre>
+					</section>
+
+					<section>
+						<h2>How long to live?</h2>
+						<p class="fragment">Shorter is prefered by editors</p>
+						<p class="fragment">Longer is preferred by operations</p>
+					</section>
+
+					<section data-transition="none" data-background-transition="none" data-background="img/pickTwo1.png" data-background-size="contain">
+					</section>
+					<section data-transition="none" data-background-transition="none" data-background="img/pickTwo2.png" data-background-size="contain">
+					</section>
+					<section data-transition="none" data-background-transition="none" data-background="img/pickTwo3.png" data-background-size="contain">
+					</section>
+					<section data-transition="none" data-background-transition="none" data-background="img/pickTwo4.png" data-background-size="contain">
+					</section>
+					<section data-transition="none" data-background-transition="none" data-background="img/pickTwo5.png" data-background-size="contain">
+					</section>
+
+					<section>
+						<h2>Make it configurable</h2>
+						<p class="fragment">Be mindful of min and max TTLs!</p>
+						<p class="fragment">Default to a happy medium</p>
+					</section>
+
+					<section>
+						<h2>Module settings form</h2>
+						<pre class="fragment"><code>drush generate module</code></pre>
+						<p class="fragment">Admin &gt; Config &gt; System &gt; My Module</p>
+					</section>
+
+					<section>
+						<h2>Module service Pattern</h2>
+						<p class="fragment">Loads the module config</p>
+						<p class="fragment">Keeps Cache TTLs transparent</p>
+					</section>
+
+					<section>
+						<pre><code>services:
+  cache.my_module:
+    class: Drupal\Core\Cache\CacheBackendInterface
+    tags:
+      - { name: cache.bin }
+    factory: ['@cache_factory', 'get']
+    arguments: [my_module]
+
+	my_module:
+		class: Drupal\my_module\MyService
+		arguments: ['@cache.my_module', '@config.factory']
+                                    # Added the config factory
+</code></pre>
+					</section>
+
+					<section>
+						<pre><code>class MyService {
+
+  protected $cache;
+  protected $config;
+
+  public function __construct(CacheBackendInterface $cache,
+							                ConfigFactory $configFactory) {
+    $this->cache = $cache;
+		$this->config = $configFactory->get('my_module');
+  }
+
+	public function getTtl() {
+		$ttl = &drupal_static(__METHOD__, NULL);
+
+		if (empty($ttl)) {
+			$ttl = $this->config->get('ttl');
+		}
+
+		return intval($ttl) ?? 3600;
+	}
+
+	public function doSomething() {
+		$out = $this->cache->get(__METHOD__);
+
+    if ($out === FALSE) {
+				// Make some data here...
+				// ...then cache.
+        $this->cache->set(__METHOD__, $out, $this->getTtl());
+      }
+    }
+
+    return $out;
+	}
+}</code></pre>
+						<small class="fragment">(Scroll down.)</small>
+					</section>
+
+					<section>
+						<h2>Cache Tags</h2>
+						<p class="fragment">Allows bin to be divided up</p>
+						<p class="fragment">Enables cross-bin invalidation</p>
+					</section>
+
+					<section>
+						<h2>Tag names</h2>
+						<p class="fragment">Anything, as long as it's unique!</p>
+					</section>
+
+					<section>
+						<h2>Common tag names</h2>
+						<pre class="fragment"><code>my_module:a:unique:key</code></pre>
+						<pre class="fragment"><code>entity_type:entity_id</code></pre>
+						<pre class="fragment"><code>config:config_name</code></pre>
+					</section>
+
+					<section>
+						<h2>You define the tags</h2>
+						<p class="fragment">..not the user!</p>
+						<p class="fragment">Avoid configurability here</p>
+					</section>
+
+					<section>
+						<pre><code>
+$cacheBin = \Drupal::cache('my_module');
+
+// Make some data here...
+// ...set the tags...
+$tags = [$entity->getEntityTypeId() . ':' . $entity->id()];
+
+// ...then cache.
+$cacheBin->set('my:cache:key', $myValue, Cache::PERMANENT, $tags);
+						</code></pre>
+					</section>
+
+					<section>
+						<h2>Invalidating tags</h2>
+						<p class="fragment">Not part of <code>\Drupal::cache()</code>!</p>
+						<p class="fragment"><code>cache_tags.invalidator</code> service</p>
+					</section>
+
+					<section>
+						<pre><code>
+$invalidator = \Drupal::service('cache_tags.invalidator');
+$invalidator->invalidateTags(['node:5']);
+						</code></pre>
+					</section>
+
+					<section>
+						<h2>Render Caching</h2>
+						<p class="fragment">Set for any render array</p>
+						<p class="fragment"><code>#cache</code> key</p>
+					</section>
+
+					<section>
+						<pre><code>
+$out = [
+	'#theme' => 'my_theme',
+	'#cache' => [
+		'max-age' => $this->myService->getTtl(),
+		'tags' => [
+			$entity->getEntityTypeId() . ':' . $entity->id(),
+		],
+	],
+];
+						</code></pre>
+					</section>
+
+					<section>
+						<h2>Cache contexts</h2>
+						<p class="fragment">Cache by aspect of request</p>
+						<p class="fragment">User, Language, URL, etc.</p>
+						<small class="fragment">drupal.org/docs/drupal-apis/cache-api/cache-contexts</small>
+					</section>
+
+					<section>
+						<pre><code>
+$out = [
+	'#theme' => 'my_theme',
+	'#cache' => [
+		'max-age' => $this->myService->getTtl(),
+		'tags' => [
+			$entity->getEntityTypeId() . ':' . $entity->id(),
+		],
+		'contexts' => [
+			'url.query_args:my_query_arg',
+		],
+	],
+];
+						</code></pre>
+					</section>
+
+					<section>
+						<h2>Front-side caching</h2>
+					</section>
+				</section>
+
+				<section>
+					<h1>Dessert</h1>
+					<p>Anti-caching recipies</p>
 					<!--
 					This is intentionally at the rear because we want people know what to do first, before we break rules!
 					-->
