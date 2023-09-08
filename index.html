@@ -33,6 +33,39 @@
 					<p class="fragment">Food, <span class="fragment">cooking,</span> <span class="fragment">and puns.</span></p>
 				</section>
 
+				<!-- Slide somewhere around here about what to expect from this session and what not to. -->
+
+				<section data-transition="none" data-background-transition="none">
+					<h2>Who's this for?</h2>
+					<p>&nbsp;</p>
+					<p>&nbsp;</p>
+					<p>&nbsp;</p>
+					<p>&nbsp;</p>
+					<p>&nbsp;</p>
+					<p>&nbsp;</p>
+				</section>
+				<section data-transition="none" data-background-transition="none" data-background="img/audience1.png" data-background-size="contain">
+					<h2>Who's this for?</h2>
+					<p>&nbsp;</p>
+					<p>&nbsp;</p>
+					<p>&nbsp;</p>
+					<p>&nbsp;</p>
+					<p>&nbsp;</p>
+					<p>&nbsp;</p>
+				</section>
+				<section data-transition="none" data-background-transition="none" data-background="img/audience2.png" data-background-size="contain">
+					<h2>Who's this for?</h2>
+					<p>&nbsp;</p>
+					<p>&nbsp;</p>
+					<p>&nbsp;</p>
+					<p>&nbsp;</p>
+					<p>&nbsp;</p>
+					<p>&nbsp;</p>
+				</section>
+
+				<section data-background-transition="slide" data-background="img/idLikeToHelp.png" data-background-size="contain">
+				</section>
+
 				<section>
 					<h2>What the problem is</h2>
 					<p class="fragment">Some text</p>
@@ -733,11 +766,44 @@ $cacheBin->set('my:cache:key', $myValue, Cache::PERMANENT, $tags);
 						<p class="fragment"><code>cache_tags.invalidator</code> service</p>
 					</section>
 
-					<section>
+					<section data-transition="none" data-background-transition="none" data-background="img/nodeInvalidate1.png" data-background-size="contain">
 						<pre><code>
 $invalidator = \Drupal::service('cache_tags.invalidator');
 $invalidator->invalidateTags(['node:5']);
 						</code></pre>
+					</section>
+					<section data-transition="none" data-background-transition="none" data-background="img/nodeInvalidate2.png" data-background-size="contain">
+						<pre><code>
+$invalidator = \Drupal::service('cache_tags.invalidator');
+$invalidator->invalidateTags(['node:5']);
+						</code></pre>
+					</section>
+					<section data-transition="none" data-background-transition="none" data-background="img/nodeInvalidate3.png" data-background-size="contain">
+						<pre><code>
+$invalidator = \Drupal::service('cache_tags.invalidator');
+$invalidator->invalidateTags(['node:5']);
+						</code></pre>
+					</section>
+
+					<section  data-transition="none" data-background-transition="none" data-background="img/nodeInvalidate1.png" data-background-size="contain">
+						<h2>Yes!</h2>
+						<pre class="fragment"><code>// Get the nodes and tags
+$node = Node::load(5);
+$node_cache_tags = $node->getCacheTagsToInvalidate()
+
+// Invalidate them all!
+$invalidator = \Drupal::service('cache_tags.invalidator');
+$invalidator->invalidateTags($node_cache_tags);</code></pre>
+					</section>
+					<section  data-transition="none" data-background-transition="none" data-background="img/nodeInvalidate4.png" data-background-size="contain">
+						<h2>Yes!</h2>
+						<pre><code>// Get the nodes and tags
+$node = Node::load(5);
+$node_cache_tags = $node->getCacheTagsToInvalidate()
+
+// Invalidate them all!
+$invalidator = \Drupal::service('cache_tags.invalidator');
+$invalidator->invalidateTags($node_cache_tags);</code></pre>
 					</section>
 
 					<section>
@@ -755,9 +821,25 @@ $out = [
 		'tags' => [
 			$entity->getEntityTypeId() . ':' . $entity->id(),
 		],
+		'contexts' => [],
 	],
 ];
 						</code></pre>
+					</section>
+
+					<section data-transition="none" data-background-transition="none" data-background="img/lookingDownLaptop.png" data-background-size="contain">
+					</section>
+					<section data-transition="none" data-background-transition="none" data-background="img/thatLooksFamiliar1.png" data-background-size="contain">
+					</section>
+					<section data-transition="none" data-background-transition="none" data-background="img/lookingUpLaptop.png" data-background-size="contain">
+						<h2 class="">Same ideas</h2>
+						<p class="fragment"><code>max-age</code> is a TTL</p>
+						<p class="fragment"><code>tags</code> are cache tags</p>
+					</section>
+					<section data-transition="none" data-background-transition="none" data-background="img/thatLooksFamiliar2.png" data-background-size="contain">
+						<h2 class="">Same ideas</h2>
+						<p class=""><code>max-age</code> is a TTL</p>
+						<p class=""><code>tags</code> are cache tags</p>
 					</section>
 
 					<section>
@@ -777,7 +859,7 @@ $out = [
 			$entity->getEntityTypeId() . ':' . $entity->id(),
 		],
 		'contexts' => [
-			'url.query_args:my_query_arg',
+			'url.query_args:my_query_arg',  // Specify contexts
 		],
 	],
 ];
@@ -785,17 +867,115 @@ $out = [
 					</section>
 
 					<section>
+						<h2>Context varients</h2>
+						<p class="fragment">Vary by a <em>part</em> of the context</p>
+						<p class="fragment"><code>contextName.varientName</code></p>
+					</section>
+
+					<section>
+						<h2>Varient parts</h2>
+						<p class="fragment">Select part of a varient</p>
+						<p class="fragment"><code>contextName.varientName:partName</code></p>
+					</section>
+
+					<section data-transition="none" data-background-transition="none" data-background="img/cacheContexts1.png" data-background-size="contain">
+						<h2>URL contexts</h2>
+						<ul>
+							<li class="fragment"><code>url</code>: The entire URL</li>
+							<li class="fragment"><code>url.query_args</code>: Vary by query args only</li>
+							<li class="fragment"><code>url.query_args:argName</code>: Vary only by given arg</li>
+						</ul>
+					</section>
+					<section data-transition="none" data-background-transition="none" data-background="img/cacheContexts2.png" data-background-size="contain">
+						<h2>URL contexts</h2>
+						<ul>
+							<li class=""><code>url</code>: The entire URL</li>
+							<li class=""><code>url.query_args</code>: Vary by query args only</li>
+							<li class=""><code>url.query_args:argName</code>: Vary only by given arg</li>
+						</ul>
+					</section>
+					<section data-transition="none" data-background-transition="none" data-background="img/cacheContexts3.png" data-background-size="contain">
+						<h2>URL contexts</h2>
+						<ul>
+							<li class=""><code>url</code>: The entire URL</li>
+							<li class=""><code>url.query_args</code>: Vary by query args only</li>
+							<li class=""><code>url.query_args:argName</code>: Vary only by given arg</li>
+						</ul>
+					</section>
+
+					<section>
 						<h2>Front-side caching</h2>
+						<p class="fragment">Caches generated HTML</p>
+						<p class="fragment">Infrastructure <em>outside</em> of Drupal!</p>
+					</section>
+
+					<section>
+						<h2>Varnish</h2>
+						<p class="fragment">Acts as a reverse proxy</p>
+						<p class="fragment">Free, Open Source</p>
+					</section>
+
+					<section>
+						<h2>Using Varnish</h2>
+						<p class="fragment">Requires VCL to configure</p>
+						<p class="fragment">Self-hosted, needs a VPS!</p>
+						<small class="fragment"><a href="https://www.varnish-software.com/developers/tutorials/configuring-varnish-drupal/">varnish-software.com/developers/tutorials/configuring-varnish-drupal</a></small>
+					</section>
+
+					<section data-transition="none" data-background-transition="none" data-background="img/lookingDownLaptop.png" data-background-size="contain">
+					</section>
+					<section data-transition="none" data-background-transition="none" data-background="img/looksComplicated1.png" data-background-size="contain">
+					</section>
+					<section data-transition="none" data-background-transition="none" data-background="img/looksComplicated2.png" data-background-size="contain">
+					</section>
+
+					<section>
+						<h2>CDNs</h2>
+						<p class="fragment">Same idea as Varnish...</p>
+						<p class="fragment">...but as a geo-aware service!</p>
+					</section>
+
+					<section>
+						<h2>CDN advantages</h2>
+						<p class="fragment">DDoS, Bot protection</p>
+						<p class="fragment">Can save on hosting costs</p>
+					</section>
+
+					<section>
+						<h2>CDN providers</h2>
+						<p class="fragment">Bunny.net, Fastly, KeyCDN, others</p>
+						<p class="fragment">Typically take over as your site's DNS</p>
+					</section>
+
+					<section data-transition="none" data-background-transition="none" data-background="img/lookingUpLaptop.png" data-background-size="contain">
+						<h2>Purge module</h2>
+						<p class="fragment">Not necessary, but helps!</p>
+						<p class="fragment">Push fine-grained invalidations to CDN</p>
+						<small class="fragment"><a href="https://www.drupal.org/project/purge">drupal.org/project/purge</a></small>
+					</section>
+					<section data-transition="none" data-background-transition="none" data-background="img/purgeModule1.png" data-background-size="contain">
+						<h2>Purge module</h2>
+						<p class="">Not necessary, but helps!</p>
+						<p class="">Push fine-grained invalidations to CDN</p>
+						<small class=""><a href="https://www.drupal.org/project/purge">drupal.org/project/purge</a></small>
 					</section>
 				</section>
 
 				<section>
-					<h1>Dessert</h1>
-					<p>Anti-caching recipies</p>
-					<!--
-					This is intentionally at the rear because we want people know what to do first, before we break rules!
-					-->
-					<p class="fragment">Some text</p>
+					<section>
+						<h1>Dessert</h1>
+						<p>Anti-caching recipies</p>
+					</section>
+
+					<section data-transition="none" data-background-transition="none" data-background="img/riskyStuff1.png" data-background-size="contain">
+					</section>
+					<section data-transition="none" data-background-transition="none" data-background="img/riskyStuff2.png" data-background-size="contain">
+					</section>
+					<section data-transition="none" data-background-transition="none" data-background="img/riskyStuff3.png" data-background-size="contain">
+					</section>
+
+
+
 				</section>
 
 				<section>
