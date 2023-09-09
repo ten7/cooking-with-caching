@@ -24,16 +24,50 @@
 				</section>
 
 				<section>
-					<h2>Intro</h2>
-					<p class="fragment">Some text</p>
+					<h2>"Where's the links?"</h2>
+					<p class="fragment"><a href="https://ten7.github.io/cooking-with-caching">ten7.github.io/cooking-with-caching</a></p>
 				</section>
 
 				<section>
-					<h2>Content Warnings (CWs)</h2>
-					<p class="fragment">Food, <span class="fragment">cooking,</span> <span class="fragment">and puns.</span></p>
+					<section data-transition="none" data-background-transition="none" data-background="img/socketwench1.png" data-background-size="contain">
+						&nbsp;
+					</section>
+					<section data-transition="none" data-background-transition="none" data-background="img/socketwench2.png" data-background-size="contain">
+						&nbsp;
+					</section>
+					<section data-transition="none" data-background-transition="none" data-background="img/socketwench3.png" data-background-size="contain">
+						&nbsp;
+					</section>
+					<section data-transition="none" data-background-transition="none" data-background="img/socketwench4.png" data-background-size="contain">
+						&nbsp;
+					</section>
+					<section data-transition="none" data-background-transition="none" data-background="img/socketwench5.png" data-background-size="contain">
+						&nbsp;
+					</section>
+					<section data-background="img/team.png" class="teamten7">
+						<img src="src/TEN7-logo.svg" width="300" />
+						<p class="fragment">Make Things That Matter</p>
+						<p class="fragment">100% Remote</p>
+						<p class="fragment">HQ in Minneapolis</p>
+					</section>
+					<section data-background="img/team.png" class="teamten7">
+						<h2 class="ten7">Services</h2>
+						<p class="fragment">Strategy, Design, Development</p>
+						<p class="fragment">also...</p>
+						<p class="fragment">Drupal Support & Maintenance</p>
+					</section>
+					<section data-background="img/team.png" class="teamten7">
+						<img src="src/TEN7-logo.svg" width="300" />
+						<p><a class="ten7" href="mailto:hi@ten7.com">hi@ten7.com</a></p>
+					</section>
 				</section>
 
-				<!-- Slide somewhere around here about what to expect from this session and what not to. -->
+				<section>
+					<section>
+						<h2>Intro</h2>
+						<p class="fragment">Some text</p>
+					</section>
+				</section>
 
 				<section data-transition="none" data-background-transition="none">
 					<h2>Who's this for?</h2>
@@ -64,16 +98,6 @@
 				</section>
 
 				<section data-background-transition="slide" data-background="img/idLikeToHelp.png" data-background-size="contain">
-				</section>
-
-				<section>
-					<h2>What the problem is</h2>
-					<p class="fragment">Some text</p>
-				</section>
-
-				<section>
-					<h2>What is cached?</h2>
-					<p class="fragment">Some text</p>
 				</section>
 
 				<section>
@@ -128,10 +152,16 @@ function myFunction(bool $reset = FALSE) {
 }
 						</code></pre>
 					</section>
+				</section>
+
+				<section>
+					<section>
+						<h1>Sharing static vars</h1>
+					</section>
 
 					<section>
-						<h2>Sharing static vars</h2>
-						<p class="fragment">Share between methods, functions</p>
+						<h2>Why share?</h2>
+						<p class="fragment">Use across methods, functions</p>
 						<p class="fragment">Rarer, but useful!</p>
 					</section>
 
@@ -198,6 +228,12 @@ class MyClass {
 						<h2><code>__METHOD__</code></h2>
 						<p class="fragment">Like <code>__FUNCTION__</code></p>
 						<p class="fragment">but includes class, namespace</p>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h1>Flexible static caching</h1>
 					</section>
 
 					<section>
@@ -299,7 +335,71 @@ class MyClass {
 
 				<section>
 					<section>
-						<h1>Lunch</h1>
+						<h1>Breakfast</h1>
+						<p class="fragment">Essential part of your site!</p>
+					</section>
+
+					<section>
+						<h2>Front-side caching</h2>
+						<p class="fragment">Caches generated HTML</p>
+						<p class="fragment">Infrastructure <em>outside</em> of Drupal!</p>
+					</section>
+
+					<section>
+						<h2>Varnish</h2>
+						<p class="fragment">Acts as a reverse proxy</p>
+						<p class="fragment">Free, Open Source</p>
+					</section>
+
+					<section>
+						<h2>Using Varnish</h2>
+						<p class="fragment">Requires VCL to configure</p>
+						<p class="fragment">Self-hosted, needs a VPS!</p>
+						<small class="fragment"><a href="https://www.varnish-software.com/developers/tutorials/configuring-varnish-drupal/">varnish-software.com/developers/tutorials/configuring-varnish-drupal</a></small>
+					</section>
+
+					<section data-transition="none" data-background-transition="none" data-background="img/lookingDownLaptop.png" data-background-size="contain">
+					</section>
+					<section data-transition="none" data-background-transition="none" data-background="img/looksComplicated1.png" data-background-size="contain">
+					</section>
+					<section data-transition="none" data-background-transition="none" data-background="img/looksComplicated2.png" data-background-size="contain">
+					</section>
+
+					<section>
+						<h2>CDNs</h2>
+						<p class="fragment">Same idea as Varnish...</p>
+						<p class="fragment">...but as a geo-aware service!</p>
+					</section>
+
+					<section>
+						<h2>CDN advantages</h2>
+						<p class="fragment">DDoS, Bot protection</p>
+						<p class="fragment">Can save on hosting costs</p>
+					</section>
+
+					<section>
+						<h2>CDN providers</h2>
+						<p class="fragment">Bunny.net, Fastly, KeyCDN, others</p>
+						<p class="fragment">Typically take over as your site's DNS</p>
+					</section>
+
+					<section data-transition="none" data-background-transition="none" data-background="img/lookingUpLaptop.png" data-background-size="contain">
+						<h2>Purge module</h2>
+						<p class="fragment">Not necessary, but helps!</p>
+						<p class="fragment">Push fine-grained invalidations to CDN</p>
+						<small class="fragment"><a href="https://www.drupal.org/project/purge">drupal.org/project/purge</a></small>
+					</section>
+					<section data-transition="none" data-background-transition="none" data-background="img/purgeModule1.png" data-background-size="contain">
+						<h2>Purge module</h2>
+						<p class="">Not necessary, but helps!</p>
+						<p class="">Push fine-grained invalidations to CDN</p>
+						<small class=""><a href="https://www.drupal.org/project/purge">drupal.org/project/purge</a></small>
+					</section>
+				</section>
+
+				<section>
+					<section data-background="img/brunch.png" data-background-size="contain">
+						<h1>Second Breakfast</h1>
 						<p class="fragment">Beyond the request</p>
 					</section>
 
@@ -384,11 +484,18 @@ $value = $cacheBin->get('a:different:key');
 
 					<section data-transition="none" data-background-transition="none" data-background="img/butIWantMyOwn2.png" data-background-size="contain">
 					</section>
+				</section>
 
+				<section>
 					<section data-background="img/aBinOfHerOwn.png" data-background-size="contain">
-						<h2>Custom bins</h2>
-						<p class="fragment">Defined as a service</p>
+						<h1>Lunch</h1>
+						<p class="fragment">Custom cache bins</p>
+					</section>
+
+					<section>
+						<h2>Defined as a service</h2>
 						<p class="fragment">No need to boilerplate a class!</p>
+						<p class="fragment">Just create some YAML!</p>
 					</section>
 
 					<section data-transition="none">
@@ -426,13 +533,8 @@ services:
 					</section>
 
 					<section>
-						<h2>That's it!</h2>
-						<p class="fragment">No need to generate a class</p>
-						<p class="fragment">Creates a new service</p>
-					</section>
-
-					<section>
-						<pre><code>
+						<h2>Using custom bins</h2>
+						<pre class="fragment"><code>
 $my_module_cache = \Drupal::cache('my_module');
 						</code></pre>
 						<p class="fragment">...or...</p>
@@ -484,10 +586,15 @@ $my_module_cache = \Drupal::service('cache.my_module');
 						<p class="fragment">Embeds cache service</p>
 					</section>
 
-					<section>
+					<section data-transition="none" data-background-transition="none" data-background="img/lookingUpLaptop.png" data-background-size="contain">
 						<h2>Creating services</h2>
 						<pre class="fragment"><code>$ drush generate service:custom</code></pre>
 						<p class="fragment">Prompts you for names, dependencies, module</p>
+					</section>
+					<section data-transition="none" data-background-transition="none" data-background="img/moduleService.png" data-background-size="contain">
+						<h2>Creating services</h2>
+						<pre class=""><code>$ drush generate service:custom</code></pre>
+						<p class="">Prompts you for names, dependencies, module</p>
 					</section>
 
 					<section>
@@ -743,7 +850,7 @@ $cacheBin->set('my:cache:key', $myValue, $ttl);
 
 					<section>
 						<h2>You define the tags</h2>
-						<p class="fragment">..not the user!</p>
+						<p class="fragment">...not the user!</p>
 						<p class="fragment">Avoid configurability here</p>
 					</section>
 
@@ -805,9 +912,31 @@ $node_cache_tags = $node->getCacheTagsToInvalidate()
 $invalidator = \Drupal::service('cache_tags.invalidator');
 $invalidator->invalidateTags($node_cache_tags);</code></pre>
 					</section>
+				</section>
+
+				<section>
+					<section>
+						<h1>Chopping Onions</h1>
+						<p class="fragment">Render caching</p>
+					</section>
+
+					<section data-transition="none" data-background-transition="none" data-background="img/onion1.png" data-background-size="contain">
+					</section>
+					<section data-transition="none" data-background-transition="none" data-background="img/onion2.png" data-background-size="contain">
+					</section>
+					<section data-transition="none" data-background-transition="none" data-background="img/onion3.png" data-background-size="contain">
+					</section>
+					<section data-transition="none" data-background-transition="none" data-background="img/onion4.png" data-background-size="contain">
+					</section>
+					<section data-transition="none" data-background-transition="none" data-background="img/onion5.png" data-background-size="contain">
+					</section>
+					<section data-transition="none" data-background-transition="none" data-background="img/onion6.png" data-background-size="contain">
+					</section>
+					<section data-transition="none" data-background-transition="none" data-background="img/onion7.png" data-background-size="contain">
+					</section>
 
 					<section>
-						<h2>Render Caching</h2>
+						<h2>Controlling Caching</h2>
 						<p class="fragment">Set for any render array</p>
 						<p class="fragment"><code>#cache</code> key</p>
 					</section>
@@ -902,63 +1031,6 @@ $out = [
 							<li class=""><code>url.query_args:argName</code>: Vary only by given arg</li>
 						</ul>
 					</section>
-
-					<section>
-						<h2>Front-side caching</h2>
-						<p class="fragment">Caches generated HTML</p>
-						<p class="fragment">Infrastructure <em>outside</em> of Drupal!</p>
-					</section>
-
-					<section>
-						<h2>Varnish</h2>
-						<p class="fragment">Acts as a reverse proxy</p>
-						<p class="fragment">Free, Open Source</p>
-					</section>
-
-					<section>
-						<h2>Using Varnish</h2>
-						<p class="fragment">Requires VCL to configure</p>
-						<p class="fragment">Self-hosted, needs a VPS!</p>
-						<small class="fragment"><a href="https://www.varnish-software.com/developers/tutorials/configuring-varnish-drupal/">varnish-software.com/developers/tutorials/configuring-varnish-drupal</a></small>
-					</section>
-
-					<section data-transition="none" data-background-transition="none" data-background="img/lookingDownLaptop.png" data-background-size="contain">
-					</section>
-					<section data-transition="none" data-background-transition="none" data-background="img/looksComplicated1.png" data-background-size="contain">
-					</section>
-					<section data-transition="none" data-background-transition="none" data-background="img/looksComplicated2.png" data-background-size="contain">
-					</section>
-
-					<section>
-						<h2>CDNs</h2>
-						<p class="fragment">Same idea as Varnish...</p>
-						<p class="fragment">...but as a geo-aware service!</p>
-					</section>
-
-					<section>
-						<h2>CDN advantages</h2>
-						<p class="fragment">DDoS, Bot protection</p>
-						<p class="fragment">Can save on hosting costs</p>
-					</section>
-
-					<section>
-						<h2>CDN providers</h2>
-						<p class="fragment">Bunny.net, Fastly, KeyCDN, others</p>
-						<p class="fragment">Typically take over as your site's DNS</p>
-					</section>
-
-					<section data-transition="none" data-background-transition="none" data-background="img/lookingUpLaptop.png" data-background-size="contain">
-						<h2>Purge module</h2>
-						<p class="fragment">Not necessary, but helps!</p>
-						<p class="fragment">Push fine-grained invalidations to CDN</p>
-						<small class="fragment"><a href="https://www.drupal.org/project/purge">drupal.org/project/purge</a></small>
-					</section>
-					<section data-transition="none" data-background-transition="none" data-background="img/purgeModule1.png" data-background-size="contain">
-						<h2>Purge module</h2>
-						<p class="">Not necessary, but helps!</p>
-						<p class="">Push fine-grained invalidations to CDN</p>
-						<small class=""><a href="https://www.drupal.org/project/purge">drupal.org/project/purge</a></small>
-					</section>
 				</section>
 
 				<section>
@@ -974,16 +1046,31 @@ $out = [
 					<section data-transition="none" data-background-transition="none" data-background="img/riskyStuff3.png" data-background-size="contain">
 					</section>
 
+					<!--
+					Don't cron `drush cr`!
+					-->
 
+					<!--
+					Lazy loading
+					-->
+
+					<!--
+					Lazy loading block content
+					-->
 
 				</section>
 
 				<section>
-					<h2>Thank you!</h2>
-					<!--
-					Normal thank you slide with links on it
-					-->
-					<p class="fragment">Some text</p>
+					<section data-background="img/specialThanks.png" data-background-size="contain">
+						<h2>Special thanks</h2>
+						<p class="fragment">This event!</p>
+						<p class="fragment"><a href="https://ten7.com/">TEN7</a></p>
+					</section>
+
+					<section data-background="img/thankYou.png" data-background-size="contain">
+						<h2>Thank you!</h2>
+						<p class="fragment"><a href="https://ten7.github.io/cooking-with-caching">ten7.github.io/cooking-with-caching</a></p>
+					</section>
 				</section>
 			</div>
 		</div>
