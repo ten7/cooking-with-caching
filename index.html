@@ -661,6 +661,10 @@ docroot/modules/custom/my_module
 
 				</section>
 
+				<!--
+				Tea: View Caching
+				-->
+
 				<section>
 					<section>
 						<h1>Dinner</h1>
@@ -1046,18 +1050,223 @@ $out = [
 					<section data-transition="none" data-background-transition="none" data-background="img/riskyStuff3.png" data-background-size="contain">
 					</section>
 
-					<!--
-					Don't cron `drush cr`!
-					-->
+					<section data-transition="none" data-background-transition="none" data-background="img/lookingUpLaptop.png" data-background-size="contain">
+						<h2>Lazy Builders</h2>
+						<p class="fragment">Puts a <em>placeholder</em> in the output</p>
+						<p class="fragment">Replaced at a later stage of rendering</p>
+					</section>
+					<section data-transition="none" data-background-transition="none" data-background="img/aLaterStage1.png" data-background-size="contain">
+						<h2>Lazy Builders</h2>
+						<p class="">Puts a token in the output</p>
+						<p class="">Replaced at a later stage of rendering</p>
+					</section>
+					<section data-transition="none" data-background-transition="none" data-background="img/aLaterStage2.png" data-background-size="contain">
+						<h2>Lazy Builders</h2>
+						<p class="">Puts a token in the output</p>
+						<p class="">Replaced at a later stage of rendering</p>
+					</section>
 
-					<!--
-					Lazy loading
-					-->
+					<section>
+						<pre><code>
+class MyController extends ControllerBase {
+	public function build() {
+		$out = [
+			'#markup' => 'Normally, you'd put your content here.',
+			'#cache' => [
+				'max-age' => $this->myService->getTtl(),
+				'tags' => [
+					'my_module:my_controller:build',
+				],
+				'contexts' => [
+					'url',
+				],
+			],
+		];
 
-					<!--
-					Lazy loading block content
-					-->
+		return $out;
+	}
+}</code></pre>
+						<small class="fragment">(Scroll down.)</small>
+					</section>
 
+					<section>
+						<pre><code>
+class MyController extends ControllerBase {
+	public function build() {
+		$out = [
+			'#markup' => 'Normally, you'd put your content here.',
+			'#cache' => [...],
+		];
+
+		return $out;
+	}
+}</code></pre>
+					</section>
+
+					<section>
+						<pre><code>
+class MyController extends ControllerBase {
+	public function build() {
+		$out = [
+			'#lazy_builder' => static::class . '::lazyBuilder',
+			'#cache' => [...],
+		];
+
+		return $out;
+	}
+
+	public static function lazyBuilder() {
+			return ['#markup' => 'Lazy built stuff here!'];
+	}
+}</code></pre>
+					</section>
+
+					<section data-transition="none" data-background-transition="none" data-background="img/lookingDownLaptop.png" data-background-size="contain">
+					</section>
+					<section data-transition="none" data-background-transition="none" data-background="img/trustedCallback1.png" data-background-size="contain">
+					</section>
+
+					<section>
+						<h2>Trusted Callbacks</h2>
+						<p class="fragment">A code-injection mitgation</p>
+						<p class="fragment">Since Drupal 8.8</p>
+						<small class="fragment"><a href="https://www.drupal.org/node/2966725">drupal.org/node/2966725</a></small>
+					</section>
+
+					<section>
+						<pre><code>class MyController extends ControllerBase
+							     implements TrustedCallbackInterface {
+	public function build() {
+		$out = [
+			'#lazy_builder' => [static::class . '::lazyBuilder'],
+			'#cache' => [...],
+		];
+
+		return $out;
+	}
+
+	public static function lazyBuilder() {
+			return ['#markup' => 'Lazy built stuff here!'];
+	}
+
+	public static function trustedCallbacks() {
+    return ['lazyBuilder'];
+  }
+}</code></pre>
+						<small class="fragment">(Scroll down)</small>
+					</section>
+
+					<section>
+						<h2>Callback methods</h2>
+						<p class="fragment">Any <code>callable</code></p>
+						<p class="fragment">Static method or fully qualified string</p>
+					</section>
+
+					<section data-transition="none" data-background-transition="none" data-background="img/lookingDownLaptop.png" data-background-size="contain">
+					</section>
+					<section data-transition="none" data-background-transition="none" data-background="img/staticOnly1.png" data-background-size="contain">
+					</section>
+					<section data-transition="none" data-background-transition="none" data-background="img/staticOnly2.png" data-background-size="contain">
+					</section>
+
+					<section data-transition="none" data-background-transition="none" data-background="img/lookingUpLaptop.png" data-background-size="contain">
+						<h2>Service Pattern</h2>
+						<pre class="fragment"><code>'#lazy_builder' => ['my_module:lazyBuilder'],</code></pre>
+						<p class="fragment">Array, not a string!</p>
+					</section>
+					<section data-transition="none" data-background-transition="none" data-background="img/notStatic1.png" data-background-size="contain">
+						<h2>Service Pattern</h2>
+						<pre class=""><code>'#lazy_builder' => ['my_module:lazyBuilder'],</code></pre>
+						<p class="">Array, not a string!</p>
+					</section>
+					<section data-transition="none" data-background-transition="none" data-background="img/notStatic2.png" data-background-size="contain">
+						<h2>Service Pattern</h2>
+						<pre class=""><code>'#lazy_builder' => ['my_module:lazyBuilder'],</code></pre>
+						<p class=""><code>serviceName.methodName</code></p>
+					</section>
+
+					<section>
+						<pre><code>class MyService implements TrustedCallbackInterface {
+
+  protected $cache;
+
+  public function __construct(CacheBackendInterface $cache) {
+    $this->cache = $cache;
+  }
+
+	public static function trustedCallbacks() {
+    return ['render'];
+  }
+
+	public function doSomething() {...}
+
+  public function render() {
+		return ['#markup' => 'Lazy built stuff here!'];
+	}
+}</code></pre>
+						<small class="fragment">(Scroll down.)</small>
+					</section>
+
+					<section data-transition="none" data-background-transition="none" data-background="img/lookingUpLaptop.png" data-background-size="contain">
+						<h2>Render Service Pattern</h2>
+						<p class="fragment">2nd service for rendering only!</p>
+						<p class="fragment">Inject your module service</p>
+					</section>
+					<section data-transition="none" data-background-transition="none" data-background="img/serviceResponsibilities1.png" data-background-size="contain">
+						<h2>Render Service Pattern</h2>
+						<p class="">2nd service for rendering only!</p>
+						<p class="">Inject your module service</p>
+					</section>
+
+					<section data-transition="none" data-background-transition="none" data-background="img/lookingUpLaptop.png" data-background-size="contain">
+						<h2>Passing Parameters</h2>
+						<pre class="fragment"><code>'#lazy_builder' => ['my_module:lazyBuilder', $arg1, $arg2],</code></pre>
+						<p class="fragment">Scalars only!</p>
+					</section>
+
+					<section data-transition="none" data-background-transition="none" data-background="img/idsNotClasses1.png" data-background-size="contain">
+						<h2>Passing Parameters</h2>
+						<pre class=""><code>'#lazy_builder' => ['my_module:lazyBuilder', $arg1, $arg2],</code></pre>
+						<p class="">Scalars only!</p>
+					</section>
+
+					<section>
+						<pre><code>class MyController extends ControllerBase {
+	public function build() {
+		return [
+			'#lazy_builder' => ['my_module:lazyBuilder', $node->id()],
+			'#cache' => [
+				'tags' => [
+					'my_module:my_controller:build',
+				] + $node->getCacheTagsToInvalidate(),
+			],
+		];
+	}
+}</code></pre>
+					</section>
+
+					<section data-transition="slide" data-background-transition="none" data-background="img/whatAboutBlocks1.png" data-background-size="contain">
+					</section>
+
+					<section>
+						<h2>Block max-age</h2>
+						<p class="fragment"><code>CacheableDependencyInterface::getCacheMaxAge()</code></p>
+						<p class="fragment">Override in your block class</p>
+					</section>
+
+					<section>
+						<pre><code>class MyBlock extends BlockBase {
+	public function build() {
+		return [
+			'#lazy_builder' => ['my_module:lazyBuilder'],
+		];
+	}
+
+  public function getCacheMaxAge() : int {
+    return 0;  // Defer to lazy builder for caching.
+  }
+}</code></pre>
+					</section>
 				</section>
 
 				<section>
