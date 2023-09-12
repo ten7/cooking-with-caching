@@ -1,7 +1,9 @@
 
 @import url(../fonts/BadScript/badscript.css);
 @import url(../fonts/Itim/itim.css);
-
+@import url(../fonts/WorkSans/worksans.css);
+@import url(../fonts/DMSerifText/dmseriftext.css);
+@import url(../fonts/VictorMono/victormono.css);
 
 html * {
   color-profile: sRGB;
@@ -12,14 +14,14 @@ html * {
  * GLOBAL STYLES
  *********************************************/
 :root {
-  --r-background-color: #fdf6e3;
+  --r-background-color: #fbf7f3;
   --r-main-font: "Itim", sans-serif;
   --r-main-font-size: 40px;
-  --r-main-color: #657b83;
+  --r-main-color: #270066;
   --r-block-margin: 20px;
   --r-heading-margin: 0 0 20px 0;
   --r-heading-font: "BadScript", Impact, sans-serif;
-  --r-heading-color: #586e75;
+  --r-heading-color: #270066;
   --r-heading-line-height: 1.2;
   --r-heading-letter-spacing: normal;
   --r-heading-text-transform: none;
@@ -30,10 +32,10 @@ html * {
   --r-heading2-size: 2.11em;
   --r-heading3-size: 1.55em;
   --r-heading4-size: 1em;
-  --r-code-font: monospace;
-  --r-link-color: #268bd2;
-  --r-link-color-dark: #1a6091;
-  --r-link-color-hover: #78b9e6;
+  --r-code-font: "VictorMono", monospace;
+  --r-link-color: #270066;
+  --r-link-color-dark: #1D0446;
+  --r-link-color-hover: #5F2FE1;
   --r-selection-background-color: #d33682;
   --r-selection-color: #fff;
 }
@@ -90,7 +92,7 @@ html * {
 .reveal h1 {
   font-size: var(--r-heading1-size);
   color: white;
-  text-shadow: 7px 7px 3px #002b36;
+  text-shadow: 7px 7px 3px #1D0446;
 }
 
 .reveal h2 {
@@ -113,7 +115,7 @@ html * {
   line-height: 1.3;
 }
 
-.reveal section.section-header p {
+.reveal section.section-header {
   color: white;
   text-shadow: 0 0 10px rgba(0, 0, 0, 1);
 }
@@ -187,12 +189,16 @@ html * {
 
 .reveal .teamten7 .fragment {
   color: white;
-  text-shadow: 0 0 20px rgba(0, 0, 0, 1);
+  font-family: "WorkSans", Impact, sans-serif;
 }
 
 .reveal .ten7 {
   color: white;
-  text-shadow: 5px 5px 20px rgba(0, 0, 0, 1);
+  font-family: "WorkSans", Impact, sans-serif;
+}
+
+.reveal a.ten7:hover {
+  color: #FB9D61;
 }
 
 .reveal blockquote {

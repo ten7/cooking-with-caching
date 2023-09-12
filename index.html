@@ -16,7 +16,7 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section data-background-transition="none" data-background="img/PXL_20230713_163656163.jpg" data-background-size="">
+				<section data-background-transition="none" data-background="img/PXL_20230713_163656163.jpg" data-background-size="cover"  class="section-header">
 					<h1>Cooking with Caching</h1>
 					<p>&nbsp;</p>
 					<p>Drupal code served fast!</p>
@@ -44,21 +44,22 @@
 					<section data-transition="none" data-background-transition="none" data-background="img/socketwench5.png" data-background-size="contain">
 						&nbsp;
 					</section>
-					<section data-background="img/team.png" class="teamten7">
+					<section data-background-color="#5f2fe1" data-background="img/ten7-heart.png" data-background-size="cover" class="teamten7">
 						<img src="src/TEN7-logo.svg" width="300" />
 						<p class="fragment">Make Things That Matter</p>
 						<p class="fragment">100% Remote</p>
 						<p class="fragment">HQ in Minneapolis</p>
 					</section>
-					<section data-background="img/team.png" class="teamten7">
+					<section data-background-color="#5f2fe1" data-background="img/ten7-heart.png" data-background-size="cover" class="teamten7">
 						<h2 class="ten7">Services</h2>
-						<p class="fragment">Strategy, Design, Development</p>
-						<p class="fragment">also...</p>
-						<p class="fragment">Drupal Support & Maintenance</p>
+						<p class="fragment">Research & Strategy</p>
+						<p class="fragment">User Experience & Design</p>
+						<p class="fragment">Drupal Development</p>
+						<p class="fragment">Continuous Care & Support</p>
 					</section>
-					<section data-background="img/team.png" class="teamten7">
+					<section data-background-color="#5f2fe1" data-background="img/ten7-heart.png" data-background-size="cover" class="teamten7">
 						<img src="src/TEN7-logo.svg" width="300" />
-						<p><a class="ten7" href="mailto:hi@ten7.com">hi@ten7.com</a></p>
+						<p><a class="ten7" href="https://ten7.com/">ten7.com</a></p>
 					</section>
 				</section>
 
@@ -1040,9 +1041,8 @@ $invalidator->invalidateTags($node_cache_tags);</code></pre>
 						<p class="fragment"><code>#cache</code> key</p>
 					</section>
 
-					<section>
-						<pre><code>
-$out = [
+					<section data-transition="none" data-background-transition="none" data-background="img/lookingUpLaptop.png" data-background-size="contain">
+						<pre><code>$out = [
 	'#theme' => 'my_theme',
 	'#cache' => [
 		'max-age' => $this->myService->getTtl(),
@@ -1051,14 +1051,21 @@ $out = [
 		],
 		'contexts' => [],
 	],
-];
-						</code></pre>
-					</section>
-
-					<section data-transition="none" data-background-transition="none" data-background="img/lookingDownLaptop.png" data-background-size="contain">
+];</code></pre>
 					</section>
 					<section data-transition="none" data-background-transition="none" data-background="img/thatLooksFamiliar1.png" data-background-size="contain">
+						<pre><code>$out = [
+	'#theme' => 'my_theme',
+	'#cache' => [
+		'max-age' => $this->myService->getTtl(),
+		'tags' => [
+			$entity->getEntityTypeId() . ':' . $entity->id(),
+		],
+		'contexts' => [],
+	],
+];</code></pre>
 					</section>
+
 					<section data-transition="none" data-background-transition="none" data-background="img/lookingUpLaptop.png" data-background-size="contain">
 						<h2 class="">Same ideas</h2>
 						<p class="fragment"><code>max-age</code> is a TTL</p>
@@ -1094,17 +1101,17 @@ $out = [
 						</code></pre>
 					</section>
 
-					<section>
-						<h2>Context varients</h2>
-						<p class="fragment">Vary by a <em>part</em> of the context</p>
-						<p class="fragment"><code>contextName.varientName</code></p>
-					</section>
+<!--					<section>-->
+<!--						<h2>Context varients</h2>-->
+<!--						<p class="fragment">Vary by a <em>part</em> of the context</p>-->
+<!--						<p class="fragment"><code>contextName.varientName</code></p>-->
+<!--					</section>-->
 
-					<section>
-						<h2>Varient parts</h2>
-						<p class="fragment">Select part of a varient</p>
-						<p class="fragment"><code>contextName.varientName:partName</code></p>
-					</section>
+<!--					<section>-->
+<!--						<h2>Varient parts</h2>-->
+<!--						<p class="fragment">Select part of a varient</p>-->
+<!--						<p class="fragment"><code>contextName.varientName:partName</code></p>-->
+<!--					</section>-->
 
 					<section data-transition="none" data-background-transition="none" data-background="img/cacheContexts1.png" data-background-size="contain">
 						<h2>URL contexts</h2>
@@ -1152,41 +1159,17 @@ $out = [
 					</section>
 					<section data-transition="none" data-background-transition="none" data-background="img/aLaterStage1.png" data-background-size="contain">
 						<h2>Lazy Builders</h2>
-						<p class="">Puts a token in the output</p>
+						<p class="">Puts a <em>placeholder</em> in the output</p>
 						<p class="">Replaced at a later stage of rendering</p>
 					</section>
 					<section data-transition="none" data-background-transition="none" data-background="img/aLaterStage2.png" data-background-size="contain">
 						<h2>Lazy Builders</h2>
-						<p class="">Puts a token in the output</p>
+						<p class="">Puts a <em>placeholder</em> in the output</p>
 						<p class="">Replaced at a later stage of rendering</p>
 					</section>
 
 					<section>
-						<pre><code>
-class MyController extends ControllerBase {
-	public function build() {
-		$out = [
-			'#markup' => 'Normally, you'd put your content here.',
-			'#cache' => [
-				'max-age' => $this->myService->getTtl(),
-				'tags' => [
-					'my_module:my_controller:build',
-				],
-				'contexts' => [
-					'url',
-				],
-			],
-		];
-
-		return $out;
-	}
-}</code></pre>
-						<small class="fragment">(Scroll down.)</small>
-					</section>
-
-					<section>
-						<pre><code>
-class MyController extends ControllerBase {
+						<pre><code>class MyController extends ControllerBase {
 	public function build() {
 		$out = [
 			'#markup' => 'Normally, you'd put your content here.',
@@ -1199,8 +1182,7 @@ class MyController extends ControllerBase {
 					</section>
 
 					<section>
-						<pre><code>
-class MyController extends ControllerBase {
+						<pre><code>class MyController extends ControllerBase {
 	public function build() {
 		$out = [
 			'#lazy_builder' => static::class . '::lazyBuilder',
@@ -1267,17 +1249,14 @@ class MyController extends ControllerBase {
 					<section data-transition="none" data-background-transition="none" data-background="img/lookingUpLaptop.png" data-background-size="contain">
 						<h2>Service Pattern</h2>
 						<pre class="fragment"><code>'#lazy_builder' => ['my_module:lazyBuilder'],</code></pre>
-						<p class="fragment">Array, not a string!</p>
 					</section>
 					<section data-transition="none" data-background-transition="none" data-background="img/notStatic1.png" data-background-size="contain">
 						<h2>Service Pattern</h2>
 						<pre class=""><code>'#lazy_builder' => ['my_module:lazyBuilder'],</code></pre>
-						<p class="">Array, not a string!</p>
 					</section>
 					<section data-transition="none" data-background-transition="none" data-background="img/notStatic2.png" data-background-size="contain">
 						<h2>Service Pattern</h2>
 						<pre class=""><code>'#lazy_builder' => ['my_module:lazyBuilder'],</code></pre>
-						<p class="">Array, not a string!</p>
 					</section>
 
 					<section>
@@ -1302,16 +1281,16 @@ class MyController extends ControllerBase {
 						<small class="fragment">(Scroll down.)</small>
 					</section>
 
-					<section data-transition="none" data-background-transition="none" data-background="img/lookingUpLaptop.png" data-background-size="contain">
-						<h2>Render Service Pattern</h2>
-						<p class="fragment">2nd service for rendering only!</p>
-						<p class="fragment">Inject your module service</p>
-					</section>
-					<section data-transition="none" data-background-transition="none" data-background="img/serviceResponsibilities1.png" data-background-size="contain">
-						<h2>Render Service Pattern</h2>
-						<p class="">2nd service for rendering only!</p>
-						<p class="">Inject your module service</p>
-					</section>
+<!--					<section data-transition="none" data-background-transition="none" data-background="img/lookingUpLaptop.png" data-background-size="contain">-->
+<!--						<h2>Render Service Pattern</h2>-->
+<!--						<p class="fragment">2nd service for rendering only!</p>-->
+<!--						<p class="fragment">Inject your module service</p>-->
+<!--					</section>-->
+<!--					<section data-transition="none" data-background-transition="none" data-background="img/serviceResponsibilities1.png" data-background-size="contain">-->
+<!--						<h2>Render Service Pattern</h2>-->
+<!--						<p class="">2nd service for rendering only!</p>-->
+<!--						<p class="">Inject your module service</p>-->
+<!--					</section>-->
 
 					<section data-transition="none" data-background-transition="none" data-background="img/lookingUpLaptop.png" data-background-size="contain">
 						<h2>Passing Parameters</h2>
