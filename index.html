@@ -361,7 +361,7 @@ class MyClass {
 			// Generate the value for $myParam here.
 		}
 
-		return $cache;
+		return $cache[$param];
 	}
 }
 						</code></pre>
@@ -398,7 +398,7 @@ class MyClass {
 			// Generate the value for the node with ID $nid.
 		}
 
-		return $cache;
+		return $cache[$nid];
 	}
 }
 						</code></pre>
@@ -426,7 +426,7 @@ class MyClass {
 			// Generate the value the unique $cid.
 		}
 
-		return $cache;
+		return $cache[$cid];
 	}
 }
 						</code></pre>
@@ -479,7 +479,7 @@ class MyClass {
 					</section>
 
 					<section>
-						<h2>CDN advantages</h2>
+						<h2>Value-adds</h2>
 						<p class="fragment">DDoS, Bot protection</p>
 						<p class="fragment">Can save on hosting costs</p>
 					</section>
@@ -515,17 +515,17 @@ class MyClass {
 
 					<section data-transition="none" data-background-transition="none" data-background="img/whatAboutRedis1.png" data-background-size="contain">
 						<h2>Persistent caching</h2>
-						<p class="fragment">Cache values to disk</p>
+						<p class="fragment">Cache values to <em>persistent store</em></p>
 						<p class="fragment">Typically, to the database</p>
 					</section>
 					<section data-transition="none" data-background-transition="none" data-background="img/whatAboutRedis2.png" data-background-size="contain">
 						<h2>Persistent caching</h2>
-						<p class="">Cache values to disk</p>
+						<p class="">Cache values to <em>persistent store</em></p>
 						<p class="">Typically, to the database</p>
 					</section>
 					<section data-transition="none" data-background-transition="none" data-background="img/whatAboutRedis3.png" data-background-size="contain">
 						<h2>Persistent caching</h2>
-						<p class="">Cache values to disk</p>
+						<p class="">Cache values to <em>persistent store</em></p>
 						<p class="">Typically, to the database</p>
 					</section>
 
