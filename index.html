@@ -146,9 +146,30 @@
 					</section>
 
 					<section>
+						<h2>Caching has layers</h2>
+						<p class="fragment">From a single variable...</p>
+						<p class="fragment">...to planet-sized infrastructure!</p>
+					</section>
+
+					<section data-transition="none" data-background-transition="none" data-background="img/onion1.png" data-background-size="contain">
+					</section>
+					<section data-transition="none" data-background-transition="none" data-background="img/onion2.png" data-background-size="contain">
+					</section>
+					<section data-transition="none" data-background-transition="none" data-background="img/onion3.png" data-background-size="contain">
+					</section>
+					<section data-transition="none" data-background-transition="none" data-background="img/onion4.png" data-background-size="contain">
+					</section>
+					<section data-transition="none" data-background-transition="none" data-background="img/onion5.png" data-background-size="contain">
+					</section>
+					<section data-transition="none" data-background-transition="none" data-background="img/onion6.png" data-background-size="contain">
+					</section>
+					<section data-transition="none" data-background-transition="none" data-background="img/onion7.png" data-background-size="contain">
+					</section>
+
+					<section>
 						<h2>Bypassing cache</h2>
+						<p class="fragment">Has to be done at <em>all</em> layers</p>
 						<p class="fragment">Opens a Denial of Service vector!</p>
-						<p class="fragment">Caching is a <ins>tradeoff</ins></p>
 					</section>
 
 					<section data-transition="none" data-background-transition="none" data-background="img/pickTwo1.png" data-background-size="contain">
@@ -161,6 +182,7 @@
 					</section>
 					<section data-transition="none" data-background-transition="none" data-background="img/pickTwo5.png" data-background-size="contain">
 					</section>
+
 
 					<section>
 						<h2>Not caching costs</h2>
@@ -231,6 +253,7 @@ function myFunction() {
 
 	if (empty($myVar)) {
 		// Generate the value here.
+		$myVar = rand();
 	}
 
 	return $myVar;
@@ -251,6 +274,7 @@ function myFunction(bool $reset = FALSE) {
 
 	if (empty($myVar) || $reset) {
 		// Generate the value here.
+		$myVar = rand();
 	}
 
 	return $myVar;
@@ -290,6 +314,7 @@ function myMethod() {
 
 	if (empty($cache)) {
 		// Generate the value here.
+		$cache = rand();
 	}
 
 	return $cache;
@@ -322,6 +347,7 @@ class MyClass {
 
 		if (empty($cache)) {
 			// Generate the value here.
+			$cache = rand();
 		}
 
 		return $cache;
@@ -359,6 +385,7 @@ class MyClass {
 
 		if (empty($cache[$param])) {
 			// Generate the value for $myParam here.
+			$myParam = rand();
 		}
 
 		return $cache[$param];
@@ -395,7 +422,7 @@ class MyClass {
 		$cache = &drupal_static(__METHOD__, []);
 
 		if (empty($cache[$nid])) {
-			// Generate the value for the node with ID $nid.
+			$cache[$nid] = $node->label();
 		}
 
 		return $cache[$nid];
@@ -423,7 +450,8 @@ class MyClass {
 		$cache = &drupal_static(__METHOD__, []);
 
 		if (empty($cache[$cid])) {
-			// Generate the value the unique $cid.
+			// Generate the value the for the unique $cid.
+			$cache[$cid] = $param1 . $node->label() . $param2;
 		}
 
 		return $cache[$cid];
@@ -440,91 +468,91 @@ class MyClass {
 					</section>
 				</section>
 
-				<section>
-					<section data-background="img/breakfast.jpg" data-background-size="cover" class="section-header">
-						<h1>Breakfast</h1>
-						<p class="fragment">Essential part of your site!</p>
-					</section>
+<!--				<section>-->
+<!--					<section data-background="img/breakfast.jpg" data-background-size="cover" class="section-header">-->
+<!--						<h1>Breakfast</h1>-->
+<!--						<p class="fragment">Essential part of your site!</p>-->
+<!--					</section>-->
 
-					<section>
-						<h2>Front-side caching</h2>
-						<p class="fragment">Caches generated HTML</p>
-						<p class="fragment">Infrastructure <em>outside</em> of Drupal!</p>
-					</section>
+<!--					<section>-->
+<!--						<h2>Front-side caching</h2>-->
+<!--						<p class="fragment">Caches generated HTML</p>-->
+<!--						<p class="fragment">Infrastructure <em>outside</em> of Drupal!</p>-->
+<!--					</section>-->
 
-					<section>
-						<h2>Varnish</h2>
-						<p class="fragment">Acts as a reverse proxy</p>
-						<p class="fragment">Free, Open Source</p>
-					</section>
+<!--					<section>-->
+<!--						<h2>Varnish</h2>-->
+<!--						<p class="fragment">Acts as a reverse proxy</p>-->
+<!--						<p class="fragment">Free, Open Source</p>-->
+<!--					</section>-->
 
-					<section>
-						<h2>Using Varnish</h2>
-						<p class="fragment">Requires VCL to configure</p>
-						<p class="fragment">Self-hosted, needs a VPS!</p>
-						<small class="fragment"><a href="https://www.varnish-software.com/developers/tutorials/configuring-varnish-drupal/">varnish-software.com/developers/tutorials/configuring-varnish-drupal</a></small>
-					</section>
+<!--					<section>-->
+<!--						<h2>Using Varnish</h2>-->
+<!--						<p class="fragment">Requires VCL to configure</p>-->
+<!--						<p class="fragment">Self-hosted, needs a VPS!</p>-->
+<!--						<small class="fragment"><a href="https://www.varnish-software.com/developers/tutorials/configuring-varnish-drupal/">varnish-software.com/developers/tutorials/configuring-varnish-drupal</a></small>-->
+<!--					</section>-->
 
-					<section data-transition="none" data-background-transition="none" data-background="img/lookingDownLaptop.png" data-background-size="contain">
-					</section>
-					<section data-transition="none" data-background-transition="none" data-background="img/looksComplicated1.png" data-background-size="contain">
-					</section>
-					<section data-transition="none" data-background-transition="none" data-background="img/looksComplicated2.png" data-background-size="contain">
-					</section>
+<!--					<section data-transition="none" data-background-transition="none" data-background="img/lookingDownLaptop.png" data-background-size="contain">-->
+<!--					</section>-->
+<!--					<section data-transition="none" data-background-transition="none" data-background="img/looksComplicated1.png" data-background-size="contain">-->
+<!--					</section>-->
+<!--					<section data-transition="none" data-background-transition="none" data-background="img/looksComplicated2.png" data-background-size="contain">-->
+<!--					</section>-->
 
-					<section>
-						<h2>CDNs</h2>
-						<p class="fragment">Same idea as Varnish...</p>
-						<p class="fragment">...but as a geo-aware service!</p>
-					</section>
+<!--					<section>-->
+<!--						<h2>CDNs</h2>-->
+<!--						<p class="fragment">Same idea as Varnish...</p>-->
+<!--						<p class="fragment">...but as a geo-aware service!</p>-->
+<!--					</section>-->
 
-					<section>
-						<h2>Value-adds</h2>
-						<p class="fragment">DDoS, Bot protection</p>
-						<p class="fragment">Can save on hosting costs</p>
-					</section>
+<!--					<section>-->
+<!--						<h2>Value-adds</h2>-->
+<!--						<p class="fragment">DDoS, Bot protection</p>-->
+<!--						<p class="fragment">Can save on hosting costs</p>-->
+<!--					</section>-->
 
-					<section>
-						<h2>CDN providers</h2>
-						<p class="fragment">Bunny.net, Fastly, KeyCDN, others</p>
-						<p class="fragment">Typically take over as your site's DNS</p>
-					</section>
+<!--					<section>-->
+<!--						<h2>CDN providers</h2>-->
+<!--						<p class="fragment">Bunny.net, Fastly, KeyCDN, others</p>-->
+<!--						<p class="fragment">Typically take over as your site's DNS</p>-->
+<!--					</section>-->
 
-					<section data-transition="none" data-background-transition="none" data-background="img/lookingUpLaptop.png" data-background-size="contain">
-						<h2>Purge module</h2>
-						<p class="fragment">Not necessary, but helps!</p>
-						<p class="fragment">Push fine-grained invalidations to CDN</p>
-						<small class="fragment"><a href="https://www.drupal.org/project/purge">drupal.org/project/purge</a></small>
-					</section>
-					<section data-transition="none" data-background-transition="none" data-background="img/purgeModule1.png" data-background-size="contain">
-						<h2>Purge module</h2>
-						<p class="">Not necessary, but helps!</p>
-						<p class="">Push fine-grained invalidations to CDN</p>
-						<small class=""><a href="https://www.drupal.org/project/purge">drupal.org/project/purge</a></small>
-					</section>
-				</section>
+<!--					<section data-transition="none" data-background-transition="none" data-background="img/lookingUpLaptop.png" data-background-size="contain">-->
+<!--						<h2>Purge module</h2>-->
+<!--						<p class="fragment">Not necessary, but helps!</p>-->
+<!--						<p class="fragment">Push fine-grained invalidations to CDN</p>-->
+<!--						<small class="fragment"><a href="https://www.drupal.org/project/purge">drupal.org/project/purge</a></small>-->
+<!--					</section>-->
+<!--					<section data-transition="none" data-background-transition="none" data-background="img/purgeModule1.png" data-background-size="contain">-->
+<!--						<h2>Purge module</h2>-->
+<!--						<p class="">Not necessary, but helps!</p>-->
+<!--						<p class="">Push fine-grained invalidations to CDN</p>-->
+<!--						<small class=""><a href="https://www.drupal.org/project/purge">drupal.org/project/purge</a></small>-->
+<!--					</section>-->
+<!--				</section>-->
 
 				<section>
 					<section data-background="img/secondBreakfast.jpg" data-background-size="cover" class="section-header">
-						<h1>Second Breakfast</h1>
-						<p class="fragment">Beyond the request</p>
+						<h1>Breakfast</h1>
+						<p class="fragment">Persistent Caching</p>
 					</section>
 
 <!--					<section data-background="img/brunch.png" data-background-size="contain">-->
 <!--					</section>-->
 
 					<section data-transition="none" data-background-transition="none" data-background="img/whatAboutRedis1.png" data-background-size="contain">
-						<h2>Persistent caching</h2>
+						<h2>Essential part of your site!</h2>
 						<p class="fragment">Cache values to <em>persistent store</em></p>
 						<p class="fragment">Typically, to the database</p>
 					</section>
 					<section data-transition="none" data-background-transition="none" data-background="img/whatAboutRedis2.png" data-background-size="contain">
-						<h2>Persistent caching</h2>
+						<h2>Essential part of your site!</h2>
 						<p class="">Cache values to <em>persistent store</em></p>
 						<p class="">Typically, to the database</p>
 					</section>
 					<section data-transition="none" data-background-transition="none" data-background="img/whatAboutRedis3.png" data-background-size="contain">
-						<h2>Persistent caching</h2>
+						<h2>Essential part of your site!</h2>
 						<p class="">Cache values to <em>persistent store</em></p>
 						<p class="">Typically, to the database</p>
 					</section>
@@ -540,7 +568,7 @@ class MyClass {
 
 					<section>
 						<h2>Cache API</h2>
-						<p class="fragment"><code>Drupal::cache()</code></p>
+						<p class="fragment"><code>\Drupal::cache()</code></p>
 					</section>
 
 					<section>
@@ -675,6 +703,7 @@ $my_module_cache = \Drupal::service('cache.my_module');
 		$this->cache->get('my:cache:key');
 	}
 }</code></pre>
+						<small class="fragment">(Scroll down.)</small>
 					</section>
 
 					<section data-transition="none" data-background-transition="none" data-background="img/soAllIHaveToDo1.png" data-background-size="contain">
@@ -1018,21 +1047,6 @@ $invalidator->invalidateTags($node_cache_tags);</code></pre>
 					<section data-background="img/chopping.jpg" data-background-size="cover" class="section-header">
 						<h1>Chopping</h1>
 						<p class="fragment">Render caching</p>
-					</section>
-
-					<section data-transition="none" data-background-transition="none" data-background="img/onion1.png" data-background-size="contain">
-					</section>
-					<section data-transition="none" data-background-transition="none" data-background="img/onion2.png" data-background-size="contain">
-					</section>
-					<section data-transition="none" data-background-transition="none" data-background="img/onion3.png" data-background-size="contain">
-					</section>
-					<section data-transition="none" data-background-transition="none" data-background="img/onion4.png" data-background-size="contain">
-					</section>
-					<section data-transition="none" data-background-transition="none" data-background="img/onion5.png" data-background-size="contain">
-					</section>
-					<section data-transition="none" data-background-transition="none" data-background="img/onion6.png" data-background-size="contain">
-					</section>
-					<section data-transition="none" data-background-transition="none" data-background="img/onion7.png" data-background-size="contain">
 					</section>
 
 					<section>
