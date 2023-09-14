@@ -303,8 +303,8 @@ function myFunction(bool $reset = FALSE) {
 
 					<section>
 						<h2>When to use</h2>
-						<p class="fragment">Function, method called <em>a lot</em></p>
-						<p class="fragment">Value <em>never</em> needs reset mid-request!</p>
+						<p class="fragment">Static var used in multiple functions, methods</p>
+						<p class="fragment">You need a consistent reset API</p>
 					</section>
 
 					<section>
@@ -360,6 +360,12 @@ class MyClass {
 						<h2><code>__METHOD__</code></h2>
 						<p class="fragment">Like <code>__FUNCTION__</code></p>
 						<p class="fragment">but includes class, namespace</p>
+					</section>
+
+					<section>
+						<h2>Resetting</h2>
+						<pre class="fragment"><code>drupal_static_reset(__METHOD__);</code></pre>
+						<p class="fragment">Not needed if overwriting</p>
 					</section>
 				</section>
 
