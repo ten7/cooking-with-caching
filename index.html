@@ -96,18 +96,18 @@
 					<section>
 						<h2>Anonymous users</h2>
 						<p class="fragment">Everything is cached<em class="fragment">, everything</em></p>
-						<p class="fragment">Designed to be hard to bypass</p>
+						<p class="fragment">Much more caching layers</p>
 					</section>
 
 					<section data-transition="none" data-background-transition="none" data-background="img/lookingUp.png" data-background-size="contain">
 						<h2>Local isn't prod!</h2>
 						<p class="fragment">Background "hum" of traffic</p>
-						<p class="fragment">Fewer caching layers</p>
+						<p class="fragment">Much more caching layers</p>
 					</section>
 					<section data-transition="none" data-background-transition="none" data-background="img/causeAndSolution1.png" data-background-size="contain">
 						<h2>Local isn't prod!</h2>
 						<p class="">Background "hum" of traffic</p>
-						<p class="">Fewer caching layers</p>
+						<p class="">Much more caching layers</p>
 					</section>
 
 					<section>
@@ -247,18 +247,18 @@
 					</section>
 
 					<section>
-						<pre><code>
-function myFunction() {
-	static $myVar = NULL;
+						<pre><code>function myFunction() {
+	static $myVar = NULL; // Initialized on first call.
 
+	// Check if the value is NULL.
 	if (empty($myVar)) {
 		// Generate the value here.
 		$myVar = rand();
 	}
 
+	// Return the value.
 	return $myVar;
-}
-						</code></pre>
+}	</code></pre>
 					</section>
 
 					<section>
@@ -308,18 +308,18 @@ function myFunction(bool $reset = FALSE) {
 					</section>
 
 					<section>
-						<pre><code>
-function myMethod() {
+						<pre><code>function myMethod() {
+	// Name our static var and set it to FALSE by default.
 	$cache = &drupal_static(__FUNCTION__, FALSE);
 
+	// Check if it's initialized.
 	if (empty($cache)) {
 		// Generate the value here.
 		$cache = rand();
 	}
 
 	return $cache;
-}
-						</code></pre>
+}</code></pre>
 					</section>
 
 					<section>
@@ -377,13 +377,12 @@ class MyClass {
 
 					<section>
 						<h2>Parameterizing static vars</h2>
-						<p class="fragment">Create different results</p>
-						<p class="fragment">Generate on ask</p>
+						<p class="fragment">Different results...</p>
+						<p class="fragment">same function or method!</p>
 					</section>
 
 					<section>
-						<pre><code>
-class MyClass {
+						<pre><code>class MyClass {
 	public function myMethod(string $myParam) {
 
 		// Init the cache to an array, not just FALSE.
@@ -396,8 +395,7 @@ class MyClass {
 
 		return $cache[$param];
 	}
-}
-						</code></pre>
+}</code></pre>
 					</section>
 
 					<section>
@@ -419,8 +417,7 @@ class MyClass {
 					</section>
 
 					<section>
-						<pre><code>
-class MyClass {
+						<pre><code>class MyClass {
 	public function myMethod(NodeInterface $node) {
 		// Get the node ID, it's unique enough here.
 		$nid = $node->id();
@@ -433,8 +430,7 @@ class MyClass {
 
 		return $cache[$nid];
 	}
-}
-						</code></pre>
+}</code></pre>
 					</section>
 
 					<section>
@@ -444,8 +440,7 @@ class MyClass {
 					</section>
 
 					<section>
-						<pre><code>
-class MyClass {
+						<pre><code>class MyClass {
 	public function myMethod(NodeInterface $node,
 							             string $param1,
 							             string $param2) {
@@ -462,8 +457,7 @@ class MyClass {
 
 		return $cache[$cid];
 	}
-}
-						</code></pre>
+}</code></pre>
 						<small class="fragment">(Scroll down.)</small>
 					</section>
 
@@ -579,16 +573,14 @@ class MyClass {
 					</section>
 
 					<section>
-						<pre><code>
-// Get the cache backend.
+						<pre><code>// Get the cache backend.
 $cache = \Drupal::cache();
 
 // Save something to it.
 $cache->set('my:cache:key', $myValue);
 
 // Get something from it.
-$value = $cache->get('a:different:key');
-						</code></pre>
+$value = $cache->get('a:different:key');</code></pre>
 					</section>
 
 					<section data-background="img/bins.png" data-background-size="contain">
@@ -598,15 +590,14 @@ $value = $cache->get('a:different:key');
 					</section>
 
 					<section>
-						<pre><code>
+						<pre><code>// Get the 'default' cache bin.
 $cacheBin = \Drupal::cache('default');
 
 // Different bin...
 $cacheBin->set('my:cache:key', $myValue);
 
 // ...same set() and get().
-$value = $cacheBin->get('a:different:key');
-						</code></pre>
+$value = $cacheBin->get('a:different:key');</code></pre>
 					</section>
 
 					<section>
@@ -644,37 +635,31 @@ $value = $cacheBin->get('a:different:key');
 					</section>
 
 					<section data-transition="none">
-						<pre><code>
-docroot/modules/custom/my_module
+						<pre><code>docroot/modules/custom/my_module
 ├── config/
 ├── my_module.info.yml
 ├── my_module.module
 │
-└── src/
-						</code></pre>
+└── src/</code></pre>
 					</section>
 
 					<section data-transition="none">
-						<pre><code>
-docroot/modules/custom/my_module
+						<pre><code>docroot/modules/custom/my_module
 ├── config/
 ├── my_module.info.yml
 ├── my_module.module
 ├── my_module.services.yml  // add or edit this file
-└── src/
-						</code></pre>
+└── src/</code></pre>
 					</section>
 
 					<section>
-						<pre><code>
-services:
+						<pre><code>services:
   cache.my_module:
     class: Drupal\Core\Cache\CacheBackendInterface
     tags:
       - { name: cache.bin }
     factory: ['@cache_factory', 'get']
-    arguments: [my_module]
-						</code></pre>
+    arguments: [my_module]</code></pre>
 					</section>
 
 					<section>
@@ -744,15 +729,13 @@ $my_module_cache = \Drupal::service('cache.my_module');
 					</section>
 
 					<section>
-						<pre><code>
-docroot/modules/custom/my_module
+						<pre><code>docroot/modules/custom/my_module
 ├── config/
 ├── my_module.info.yml
 ├── my_module.module
 ├── my_module.services.yml  // Update this...
 └── src/
-		└── MyService.php	 // ...and this too.
-						</code></pre>
+		└── MyService.php	 // ...and this too.</code></pre>
 					</section>
 
 					<section>
@@ -766,8 +749,7 @@ docroot/modules/custom/my_module
 
 	my_module:
 		class: Drupal\my_module\MyService
-		arguments: ['@cache.my_module']
-</code></pre>
+		arguments: ['@cache.my_module']</code></pre>
 					</section>
 
 					<section>
@@ -803,6 +785,7 @@ docroot/modules/custom/my_module
 					<section>
 						<h2>Tidy & Transparent</h2>
 						<p class="fragment">Module service centralizes code changes</p>
+						<p class="fragment">Easy to find your module's API</p>
 					</section>
 
 				</section>
@@ -865,15 +848,13 @@ $value = $cacheBin->deleteAll();</code></pre>
 					</section>
 
 					<section>
-						<pre><code>
-$cacheBin = \Drupal::cache('my_module');
+						<pre><code>$cacheBin = \Drupal::cache('my_module');
 
 // Generate a TTL in seconds.
 $ttl = strtotime('+6 hours');
 
-// Set the key.
-$cacheBin->set('my:cache:key', $myValue, $ttl);
-						</code></pre>
+							                      //   ↓↓↓↓  Set the TTL!
+$cacheBin->set('my:cache:key', $myValue, $ttl);</code></pre>
 					</section>
 
 					<section data-transition="none" data-background-transition="none" data-background="img/untilAClearAllAtLeast1.png" data-background-size="contain">
@@ -924,8 +905,7 @@ $cacheBin->set('my:cache:key', $myValue, $ttl);
 	my_module:
 		class: Drupal\my_module\MyService
 		arguments: ['@cache.my_module', '@config.factory']
-                                    # Added the config factory
-</code></pre>
+                                    # Added the config factory</code></pre>
 					</section>
 
 					<section>
@@ -991,16 +971,14 @@ $cacheBin->set('my:cache:key', $myValue, $ttl);
 					</section>
 
 					<section>
-						<pre><code>
-$cacheBin = \Drupal::cache('my_module');
+						<pre><code>$cacheBin = \Drupal::cache('my_module');
 
 // Make some data here...
 // ...set the tags...
 $tags = [$entity->getEntityTypeId() . ':' . $entity->id()];
 
 // ...then cache.
-$cacheBin->set('my:cache:key', $myValue, Cache::PERMANENT, $tags);
-						</code></pre>
+$cacheBin->set('my:cache:key', $myValue, Cache::PERMANENT, $tags);</code></pre>
 					</section>
 
 					<section>
@@ -1042,7 +1020,7 @@ $invalidator->invalidateTags($node_cache_tags);</code></pre>
 						<h2>Yes!</h2>
 						<pre><code>// Get the nodes and tags
 $node = Node::load(5);
-$node_cache_tags = $node->getCacheTagsToInvalidate()
+$node_cache_tags = $node->getCacheTagsToInvalidate();
 
 // Invalidate them all!
 $invalidator = \Drupal::service('cache_tags.invalidator');
@@ -1058,8 +1036,8 @@ $invalidator->invalidateTags($node_cache_tags);</code></pre>
 
 					<section>
 						<h2>Controlling Caching</h2>
-						<p class="fragment">Set for any render array</p>
 						<p class="fragment"><code>#cache</code> key</p>
+						<p class="fragment">Set for any render array</p>
 					</section>
 
 					<section data-transition="none" data-background-transition="none" data-background="img/lookingUpLaptop.png" data-background-size="contain">
@@ -1106,8 +1084,7 @@ $invalidator->invalidateTags($node_cache_tags);</code></pre>
 					</section>
 
 					<section>
-						<pre><code>
-$out = [
+						<pre><code>$out = [
 	'#theme' => 'my_theme',
 	'#cache' => [
 		'max-age' => $this->myService->getTtl(),
@@ -1118,8 +1095,7 @@ $out = [
 			'url.query_args:my_query_arg',  // Specify contexts
 		],
 	],
-];
-						</code></pre>
+];</code></pre>
 					</section>
 
 <!--					<section>-->
@@ -1206,7 +1182,7 @@ $out = [
 						<pre><code>class MyController extends ControllerBase {
 	public function build() {
 		$out = [
-			'#lazy_builder' => static::class . '::lazyBuilder',
+			'#lazy_builder' => [static::class . '::lazyBuilder'],
 			'#cache' => [...],
 		];
 
@@ -1226,8 +1202,8 @@ $out = [
 
 					<section>
 						<h2>Trusted Callbacks</h2>
-						<p class="fragment">A code-injection mitgation</p>
-						<p class="fragment">Since Drupal 8.8</p>
+						<p class="fragment">A code-injection mitgation...</p>
+						<p class="fragment">...<em>especially</em> when using BigPipe</p>
 						<small class="fragment"><a href="https://www.drupal.org/node/2966725">drupal.org/node/2966725</a></small>
 					</section>
 
@@ -1302,6 +1278,9 @@ $out = [
 						<small class="fragment">(Scroll down.)</small>
 					</section>
 
+					<section data-transition="none" data-background-transition="none" data-background="img/renderService1.png" data-background-size="contain">
+					</section>
+
 <!--					<section data-transition="none" data-background-transition="none" data-background="img/lookingUpLaptop.png" data-background-size="contain">-->
 <!--						<h2>Render Service Pattern</h2>-->
 <!--						<p class="fragment">2nd service for rendering only!</p>-->
@@ -1332,7 +1311,7 @@ $out = [
 			'#lazy_builder' => ['my_module:lazyBuilder', $node->id()],
 			'#cache' => [
 				'tags' => [
-					'my_module:my_controller:build',
+					__METHOD__,
 				] + $node->getCacheTagsToInvalidate(),
 			],
 		];
